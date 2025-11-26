@@ -1,5 +1,7 @@
-// 🚀 DASHBOARD LAYOUT
-// Layout principal de la aplicación con Sidebar y Navbar
+"use client";
+
+import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 
 export default function DashboardLayout({
   children,
@@ -7,35 +9,19 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-lg">
-        <div className="p-6">
-          <h2 className="text-2xl font-bold text-blue-600">Nexus</h2>
-        </div>
-        <nav className="mt-6">
-          <a href="/dashboard" className="block px-6 py-3 text-gray-700 hover:bg-blue-50">
-            🏠 Dashboard
-          </a>
-          <a href="/dashboard/marketplace" className="block px-6 py-3 text-gray-700 hover:bg-blue-50">
-            🛒 Marketplace
-          </a>
-          <a href="/dashboard/match" className="block px-6 py-3 text-gray-700 hover:bg-blue-50">
-            💘 Match
-          </a>
-          <a href="/dashboard/profile" className="block px-6 py-3 text-gray-700 hover:bg-blue-50">
-            👤 Perfil
-          </a>
-          <a href="/dashboard/erp" className="block px-6 py-3 text-gray-700 hover:bg-blue-50">
-            📊 ERP
-          </a>
-        </nav>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 p-8">
-        {children}
-      </main>
-    </div>
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-gray-200 bg-white px-4">
+          <SidebarTrigger className="-ml-1" />
+          <div className="flex items-center gap-2 px-4">
+            <h1 className="text-lg font-semibold text-gray-800">Dashboard</h1>
+          </div>
+        </header>
+        <main className="flex-1 p-8 bg-gray-50">
+          {children}
+        </main>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
