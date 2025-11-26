@@ -2,21 +2,30 @@
 // Responsable: Jesus
 // URL: /dashboard/profile
 
+import ProfileHeader from "@/src/components/modules/profile/ProfileHeader"
+
 export default function ProfilePage() {
   return (
     <div>
-      <h1 className="text-4xl font-bold mb-6">👤 Mi Perfil</h1>
-      <p className="text-gray-600 mb-4">Responsable: Jesus</p>
+      <h1 className="text-4xl font-bold mb-6 text-primary">Bienvenido de vuelta, Jesus</h1>
       
-      <div className="bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl font-semibold mb-4">📝 Tareas:</h2>
-        <ul className="space-y-2">
-          <li>✅ Crear componentes en: src/components/modules/profile/</li>
-          <li>✅ ProfileHeader - Cabecera con foto y nombre</li>
-          <li>✅ EditProfileForm - Formulario de edición</li>
-          <li>✅ Vista de empresa</li>
-        </ul>
+
+      {/* Aqui va ir el ProfileHeader */}
+
+       <section className="max-w-5xl mx-auto mt-8 px-4">
+          <ProfileHeader />
+
+
+      <div className="pt-20 md:pt-16">
+        <div className="mx-auto bg-white/70 dark:bg-emerald-900/60 backdrop-blur-md rounded-2xl shadow-xl p-2 md:p-3 max-w-3xl">
+          <div className="grid grid-cols-3 gap-2">
+            <button className="py-2 rounded-xl bg-emerald-600 text-white font-medium">Posts</button>
+            <button className="py-2 rounded-xl text-emerald-700 dark:text-emerald-200 hover:bg-emerald-50/60 dark:hover:bg-white/5">Destinos</button>
+            <button className="py-2 rounded-xl text-emerald-700 dark:text-emerald-200 hover:bg-emerald-50/60 dark:hover:bg-white/5">Insignias</button>
+          </div>
+        </div>
       </div>
+    </section>
 
       <div className="mt-6 bg-white p-6 rounded-lg shadow">
         <div className="flex items-center gap-4 mb-6">
