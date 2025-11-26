@@ -1,24 +1,61 @@
 @import "tailwindcss";
 
 :root {
+  /* --- 1. Variables Base --- */
   --background: #ffffff;
   --foreground: #171717;
+
+  /* --- 2. Paleta Nexus (Cian/Azul) --- */
+  /* Primary */
+  --color-primary: #06b6d4;
+  --color-primary-hover: #0891b2;
+  --color-primary-light: #ecfeff;
+  --color-primary-dark: #0e7490;
+
+  /* Secondary */
+  --color-secondary: #3b82f6;
+  --color-secondary-hover: #2563eb;
+  --color-secondary-light: #eff6ff;
+
+  /* Accent */
+  --color-accent: #0ea5e9;
+  --color-accent-hover: #0284c7;
 }
 
+/* --- 3. Configuración del Tema Tailwind v4 --- */
 @theme inline {
+  /* Mapeo de variables base */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Mapeo de Paleta Nexus para usar como clases (ej: bg-primary) */
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-light: var(--color-primary-light);
+  --color-primary-dark: var(--color-primary-dark);
+
+  --color-secondary: var(--color-secondary);
+  --color-secondary-hover: var(--color-secondary-hover);
+  --color-secondary-light: var(--color-secondary-light);
+
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
 }
 
+/* --- 4. Modo Oscuro (Opcional) --- */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    
+    /* Si quisieran ajustar el tono cyan para modo oscuro, lo harían aquí */
+    /* Por ejemplo: --color-primary-light: #155e75; */
   }
 }
 
+/* --- 5. Estilos globales --- */
 body {
   background: var(--background);
   color: var(--foreground);
