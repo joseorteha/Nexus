@@ -1,4 +1,4 @@
-import SettingsIcon from "@/src/assets/SettingsIcon";
+import SettingsIcon from "../../../assets/SettingsIcon.tsx";
 
 export default function ProfileHeader() {
   return (

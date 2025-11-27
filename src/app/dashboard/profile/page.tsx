@@ -2,7 +2,7 @@
 // Responsable: Jesus
 // URL: /dashboard/profile
 
-import ProfileHeader from "@/src/components/modules/profile/ProfileHeader"
+import ProfileHeader from "../../../components/modules/profile/ProfileHeader";
 
 export default function ProfilePage() {
   return (
