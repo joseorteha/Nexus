@@ -219,3 +219,5 @@ const CatalogPage: React.FC = () => {
 };
 
 export default CatalogPage;
+
+/* editado para subir */

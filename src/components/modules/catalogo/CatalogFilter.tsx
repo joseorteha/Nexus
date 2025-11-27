@@ -87,3 +87,5 @@ const CatalogFilter: React.FC<CatalogFilterProps> = ({
 };
 
 export default CatalogFilter;
+
+/* editado para subir */

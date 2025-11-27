@@ -159,3 +159,5 @@ const CompanyModal: React.FC<CompanyModalProps> = ({ company, isOpen, onClose })
 };
 
 export default CompanyModal;
+
+/* editado para subir */

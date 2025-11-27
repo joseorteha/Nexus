@@ -12,3 +12,5 @@ export interface CartItem {
   quantity: number;
   imageUrl?: string;
 }
+
+/* editado para subir */

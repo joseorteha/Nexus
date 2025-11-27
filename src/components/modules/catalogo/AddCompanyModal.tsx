@@ -255,3 +255,5 @@ const AddCompanyModal: React.FC<AddCompanyModalProps> = ({
 };
 
 export default AddCompanyModal;
+
+

@@ -37,3 +37,5 @@ export const products: Product[] = [
     category: 'home',
   },
 ];
+
+/* editado para subir */

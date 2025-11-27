@@ -40,3 +40,6 @@ export interface AddCompanyModalProps {
   onSubmit: (formData: any) => Promise<void>;
   isLoading?: boolean;
 }
+
+
+/* editado para subir */

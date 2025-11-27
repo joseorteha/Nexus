@@ -105,3 +105,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company, onViewDetails }) => 
 };
 
 export default CompanyCard;
+
+
+
+/* editado para subir */
