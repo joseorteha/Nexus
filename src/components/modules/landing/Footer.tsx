@@ -7,28 +7,22 @@ const SocialIcon = ({ children }: { children: React.ReactNode }) => (
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-gray-900 text-white py-16"> {/* Fondo oscuro premium */}
+    <footer className="w-full bg-gray-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-5 gap-10">
 
-            {/* 1. BRANDING Y MISIÓN (Columna 1 y 2) */}
+            {/* 1. BRANDING Y MISIÓN */}
             <div className="md:col-span-2">
                 <div className="flex items-center mb-3">
-                    {/* Placeholder para logo o icono de Nexus */}
-                    <span className="text-3xl font-extrabold text-blue-400 mr-2">N</span> 
-                    <h3 className="text-2xl font-bold">Nexus</h3>
+                    <img src="/NEXUS_LOGOTIPO.png" alt="Nexus Logo" className="h-44"/>
                 </div>
                 
                 <p className="mt-2 text-sm text-gray-400 max-w-sm leading-relaxed">
                     Impulsamos el crecimiento económico conectando empresas y fortaleciendo cadenas productivas en los PODECOBI.
                 </p>
-                <div className="flex space-x-4 mt-6 text-xl">
-                    <SocialIcon>🐦</SocialIcon> {/* Twitter/X */}
-                    <SocialIcon>💼</SocialIcon> {/* LinkedIn */}
-                    <SocialIcon>📘</SocialIcon> {/* Facebook */}
-                </div>
+
             </div>
 
-            {/* 2. EXPLORAR / PRODUCTOS (Columna 3) */}
+            {/* 2. EXPLORAR / PRODUCTOS */}
             <div>
                 <h4 className="font-bold mb-4 text-lg">Plataforma</h4>
                 <ul className="space-y-3 text-gray-300 text-base">
@@ -39,33 +33,39 @@ export default function Footer() {
                 </ul>
             </div>
 
-            {/* 3. LEGAL Y AYUDA (Columna 4) */}
+            {/* 3. LEGAL Y AYUDA */}
             <div>
                 <h4 className="font-bold mb-4 text-lg">Legal y Ayuda</h4>
                 <ul className="space-y-3 text-gray-300 text-base">
-                    <li><a href="/terms" className="hover:text-blue-400 transition">Términos de Servicio</a></li>
-                    <li><a href="/privacy" className="hover:text-blue-400 transition">Política de Privacidad</a></li>
-                    <li><a href="/faq" className="hover:text-blue-400 transition">Preguntas Frecuentes</a></li>
-                    <li><a href="/contact" className="hover:text-blue-400 transition">Contacto y Soporte</a></li>
+                    <li><a href="/legal/terminos" className="hover:text-blue-400 transition">Términos de Servicio</a></li>
+                    <li><a href="/legal/privacidad" className="hover:text-blue-400 transition">Política de Privacidad</a></li>
+                    <li><a href="/ayuda/faq" className="hover:text-blue-400 transition">Preguntas Frecuentes</a></li>
+                    <li><a href="/ayuda/contacto" className="hover:text-blue-400 transition">Contacto y Soporte</a></li>
                 </ul>
             </div>
 
-            {/* 4. INFORMACIÓN DE CONTACTO (Columna 5) */}
+            {/* 4. INFORMACIÓN DE CONTACTO */}
             <div>
                 <h4 className="font-bold mb-4 text-lg">Contáctanos</h4>
                 <ul className="space-y-3 text-gray-300 text-base">
                     <li className="flex items-center space-x-2">
-                         <span>📧</span> <a href="mailto:info@nexus.com" className="hover:text-blue-400 transition">info@nexus.com</a>
+                         <span>📧</span> 
+                         <a href="mailto:info@nexus.com" className="hover:text-blue-400 transition">
+                           info@nexus.com
+                         </a>
                     </li>
                     <li className="flex items-center space-x-2">
-                        <span>📞</span> <a href="tel:+123456789" className="hover:text-blue-400 transition">+52 1 234 567 890</a>
+                        <span>📞</span> 
+                        <a href="tel:+521234567890" className="hover:text-blue-400 transition">
+                          +52 1 234 567 890
+                        </a>
                     </li>
                 </ul>
             </div>
 
         </div>
 
-        {/* Derechos de Autor (Bottom Bar) */}
+        {/* Derechos de Autor */}
         <div className="mt-12 pt-6 border-t border-gray-700 max-w-7xl mx-auto px-6 text-center">
             <p className="text-sm text-gray-500">
                 © {new Date().getFullYear()} Nexus. Todos los derechos reservados.
