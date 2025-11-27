@@ -59,7 +59,7 @@ export default function CustomersPage() {
       case "Empresa":
         return { variant: "default" as const, icon: Building2, label: "Empresa" };
       case "Individual":
-        return { variant: "secondary" as const, icon: UserCircle, label: "Individual" };
+        return { variant: "info" as const, icon: UserCircle, label: "Individual" };
     }
   };
 
