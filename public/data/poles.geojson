@@ -1,0 +1,136 @@
+{
+  "type": "FeatureCollection",
+  "name": "PODECOBI_2025",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1001,
+        "name": "PODECOBI Seybaplaya I",
+        "state": "Campeche",
+        "url": "https://www.proyectosmexico.gob.mx/proyecto_inversion/1001-podecobi-seybaplaya-i-campeche/"
+      },
+      "geometry": { "type": "Point", "coordinates": [-90.7172, 19.6377] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1002,
+        "name": "PODECOBI San Jerónimo",
+        "state": "Chihuahua",
+        "url": "https://www.proyectosmexico.gob.mx/proyecto_inversion/1002-podecobi-san-jeronimo-chihuahua/"
+      },
+      "geometry": { "type": "Point", "coordinates": [-106.4286, 31.654] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1003,
+        "name": "PODECOBI Chetumal",
+        "state": "Quintana Roo",
+        "url": "https://www.proyectosmexico.gob.mx/proyecto_inversion/1003-podecobi-chetumal-quintana-roo/"
+      },
+      "geometry": { "type": "Point", "coordinates": [-88.305, 18.5036] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1004,
+        "name": "PODECOBI Capital de la Tecnología y la Sostenibilidad",
+        "state": "Puebla",
+        "url": "https://www.proyectosmexico.gob.mx/proyecto_inversion/1004-podecobi-futura-capital-de-la-tecnologia-y-la-sostenibilidad-puebla/"
+      },
+      "geometry": { "type": "Point", "coordinates": [-98.1987, 19.0435] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1005,
+        "name": "PODECOBI Reserva Zapotlán",
+        "state": "Hidalgo",
+        "url": "https://www.proyectosmexico.gob.mx/proyecto_inversion/1005-podecobi-reserva-zapotlan-hidalgo/"
+      },
+      "geometry": { "type": "Point", "coordinates": [-98.955, 20.1628] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1006,
+        "name": "PODECOBI Parque Industrial Bajío",
+        "state": "Michoacán",
+        "url": "https://www.proyectosmexico.gob.mx/proyecto_inversion/1006-podecobi-parque-industrial-bajio-michoacan/"
+      },
+      "geometry": { "type": "Point", "coordinates": [-102.0205, 20.3404] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1010,
+        "name": "PODECOBI Puerta Logística del Bajío",
+        "state": "Guanajuato",
+        "url": "https://www.proyectosmexico.gob.mx/proyecto_inversion/1010-podecobi-puerta-logistica-del-bajio-guanajuato/"
+      },
+      "geometry": { "type": "Point", "coordinates": [-100.6202, 20.4523] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1012,
+        "name": "PODECIBI Parque Hidalgo",
+        "state": "Hidalgo",
+        "url": "https://www.proyectosmexico.gob.mx/proyecto_inversion/1012-podecibi-parque-hidalgo/"
+      },
+      "geometry": { "type": "Point", "coordinates": [-98.7628, 20.091] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1015,
+        "name": "PODECOBI Nezahualcóyotl",
+        "state": "Estado de México",
+        "url": "https://www.proyectosmexico.gob.mx/proyecto_inversion/1015-podecobi-nezahualcoyotl-estado-de-mexico/"
+      },
+      "geometry": { "type": "Point", "coordinates": [-99.0272, 19.414] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1016,
+        "name": "PODECOBI Huamantla",
+        "state": "Tlaxcala",
+        "url": "https://www.proyectosmexico.gob.mx/proyecto_inversion/1016-podecobi-huamantla-tlaxcala/"
+      },
+      "geometry": { "type": "Point", "coordinates": [-97.9255, 19.3156] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1019,
+        "name": "PODECOBI Tuxpan",
+        "state": "Veracruz",
+        "url": "https://www.proyectosmexico.gob.mx/proyecto_inversion/1019-podecobi-tuxpan-veracruz/"
+      },
+      "geometry": { "type": "Point", "coordinates": [-97.404, 20.9564] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1020,
+        "name": "PODECOBI Centro Logístico e Industrial de Durango",
+        "state": "Durango",
+        "url": "https://www.proyectosmexico.gob.mx/proyecto_inversion/1020-podecobi-centro-logistico-e-industrial-de-durango/"
+      },
+      "geometry": { "type": "Point", "coordinates": [-104.6588, 24.0209] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1021,
+        "name": "PODECOBI Hermosillo",
+        "state": "Sonora",
+        "url": "https://www.proyectosmexico.gob.mx/proyecto_inversion/1021-podecobi-hermosillo-sonora/"
+      },
+      "geometry": { "type": "Point", "coordinates": [-110.9559, 29.0729] }
+    }
+  ]
+}
