@@ -9,11 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@heroui/navbar": "^2.2.25",
-    "clsx": "^2.1.1",
-    "mapbox-gl": "^3.16.0",
-=======
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
@@ -23,7 +19,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.555.0",
->>>>>>> c654e71ab8c8f7bd21fac14b1bd6a7d203158a4b
+    "mapbox-gl": "^3.16.0",
     "next": "16.0.4",
     "react": "19.2.0",
     "react-dom": "19.2.0",
