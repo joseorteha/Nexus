@@ -186,11 +186,17 @@ const fileName = `profile/${Date.now()}-${avatarFile.name}`;
                   {" "}Iniciar Sesión
                 </a>
               </p>
+            </div>
 
-              <p className="text-sm">
-                ¿Eres una empresa?
-                <a href="/auth/register/empresa" className="font-medium text-primary hover:text-primary-hover">
-                  {" "}Regístrate aquí
+            {/* Banner Empresas */}
+            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-4">
+              <p className="text-sm text-gray-700 text-center">
+                🏢 <span className="font-semibold">¿Eres una empresa?</span>
+                <a 
+                  href="/auth/register/empresa" 
+                  className="block mt-2 text-blue-600 font-bold hover:text-blue-700 hover:underline"
+                >
+                  Regístrate aquí →
                 </a>
               </p>
             </div>

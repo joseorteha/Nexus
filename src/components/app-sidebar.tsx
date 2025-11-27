@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Home, ShoppingCart, Heart, User, BarChart3, Package, Users, Store, Map, Settings, TrendingUp } from "lucide-react";
+import { Home, ShoppingCart, Heart, User, BarChart3, Package, Users, Store, Map, Settings, TrendingUp, FileText } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -36,6 +36,7 @@ export function AppSidebar() {
         .eq("id", user.id)
         .single();
 
+      console.log("🔧 Sidebar - Tipo de usuario:", userData?.tipo_usuario);
       setTipoUsuario(userData?.tipo_usuario || "normal");
 
       // Si es usuario normal, verificar si pertenece a una cooperativa
@@ -72,6 +73,11 @@ export function AppSidebar() {
       title: "Mis Productos",
       url: "/dashboard/productos",
       icon: Package,
+    },
+    {
+      title: "Mis Ventas",
+      url: "/dashboard/ventas",
+      icon: TrendingUp,
     },
     {
       title: "Marketplace",
@@ -116,14 +122,9 @@ export function AppSidebar() {
       icon: Package,
     },
     {
-      title: "Marketplace",
+      title: "Oportunidades",
       url: "/dashboard/marketplace",
       icon: ShoppingCart,
-    },
-    {
-      title: "Match",
-      url: "/dashboard/match",
-      icon: Heart,
     },
     {
       title: "Mi Cooperativa",
@@ -150,18 +151,33 @@ export function AppSidebar() {
       icon: Home,
     },
     {
-      title: "Marketplace",
-      url: "/dashboard/marketplace",
+      title: "Mis Compras",
+      url: "/dashboard/compras",
       icon: ShoppingCart,
     },
     {
-      title: "Match",
-      url: "/dashboard/match",
-      icon: Heart,
+      title: "Mis Pedidos",
+      url: "/dashboard/pedidos",
+      icon: Package,
     },
     {
-      title: "ERP",
-      url: "/dashboard/erp",
+      title: "Buscar Productos",
+      url: "/dashboard/marketplace",
+      icon: Store,
+    },
+    {
+      title: "Proveedores",
+      url: "/dashboard/proveedores",
+      icon: Users,
+    },
+    {
+      title: "Contratos",
+      url: "/dashboard/contratos",
+      icon: FileText,
+    },
+    {
+      title: "Reportes",
+      url: "/dashboard/reportes",
       icon: BarChart3,
     },
     {
@@ -216,6 +232,9 @@ export function AppSidebar() {
     tipoUsuario === "cooperativa" ? menuCooperativa :
     tipoUsuario === "empresa" ? menuEmpresa :
     menuUsuarioNormal;
+
+  console.log("🔧 Sidebar - Menú seleccionado para tipo:", tipoUsuario);
+  console.log("🔧 Sidebar - Items del menú:", menuItems.map(i => i.title));
 
   return (
     <Sidebar>
@@ -292,3 +311,4 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
+

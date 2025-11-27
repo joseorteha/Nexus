@@ -174,13 +174,42 @@ export async function obtenerEstadisticas(
   propietarioId: string,
   tipoPropietario: TipoPropietario
 ): Promise<EstadisticasProductos> {
-  const { data, error } = await supabase.rpc("obtener_estadisticas_productos", {
-    p_propietario_id: propietarioId,
-    p_tipo_propietario: tipoPropietario,
-  });
+  // Obtener todos los productos del propietario
+  const { data: productos, error } = await supabase
+    .from("productos")
+    .select("*")
+    .eq("propietario_id", propietarioId)
+    .eq("tipo_propietario", tipoPropietario);
 
   if (error) throw error;
-  return data as EstadisticasProductos;
+  if (!productos) {
+    return {
+      total_productos: 0,
+      productos_activos: 0,
+      productos_agotados: 0,
+      valor_total_inventario: 0,
+      productos_stock_bajo: 0,
+    };
+  }
+
+  // Calcular estadísticas manualmente
+  const total_productos = productos.length;
+  const productos_activos = productos.filter(p => p.estado === "activo").length;
+  const productos_agotados = productos.filter(p => p.stock_actual === 0).length;
+  const valor_total_inventario = productos.reduce(
+    (sum, p) => sum + (p.stock_actual * p.precio), 0
+  );
+  const productos_stock_bajo = productos.filter(
+    p => p.stock_actual <= p.stock_minimo && p.stock_actual > 0
+  ).length;
+
+  return {
+    total_productos,
+    productos_activos,
+    productos_agotados,
+    valor_total_inventario,
+    productos_stock_bajo,
+  };
 }
 
 // =============================================
@@ -199,18 +228,58 @@ export async function registrarMovimiento(movimiento: {
   notas?: string;
   referencia?: string;
 }) {
-  const { data, error } = await supabase.rpc("registrar_movimiento_inventario", {
-    p_producto_id: movimiento.producto_id,
-    p_tipo_movimiento: movimiento.tipo_movimiento,
-    p_cantidad: movimiento.cantidad,
-    p_motivo: movimiento.motivo,
-    p_realizado_por: movimiento.realizado_por,
-    p_notas: movimiento.notas || null,
-    p_referencia: movimiento.referencia || null,
-  });
+  // Obtener stock actual del producto
+  const { data: producto, error: productoError } = await supabase
+    .from("productos")
+    .select("stock_actual")
+    .eq("id", movimiento.producto_id)
+    .single();
 
-  if (error) throw error;
-  return data;
+  if (productoError) throw productoError;
+  if (!producto) throw new Error("Producto no encontrado");
+
+  const stock_anterior = producto.stock_actual;
+  let stock_nuevo = stock_anterior;
+
+  // Calcular nuevo stock según el tipo de movimiento
+  if (movimiento.tipo_movimiento === "entrada") {
+    stock_nuevo = stock_anterior + movimiento.cantidad;
+  } else if (movimiento.tipo_movimiento === "salida") {
+    stock_nuevo = stock_anterior - movimiento.cantidad;
+  } else {
+    // ajuste
+    stock_nuevo = movimiento.cantidad;
+  }
+
+  // Registrar movimiento (si la tabla existe)
+  try {
+    await supabase
+      .from("inventario_movimientos")
+      .insert({
+        producto_id: movimiento.producto_id,
+        tipo_movimiento: movimiento.tipo_movimiento,
+        cantidad: movimiento.cantidad,
+        motivo: movimiento.motivo,
+        stock_anterior,
+        stock_nuevo,
+        realizado_por: movimiento.realizado_por,
+        notas: movimiento.notas,
+        referencia: movimiento.referencia,
+      });
+  } catch (error) {
+    // Si la tabla no existe, solo actualizar el stock
+    console.log("Tabla inventario_movimientos no existe, solo actualizando stock");
+  }
+
+  // Actualizar stock del producto
+  const { error: updateError } = await supabase
+    .from("productos")
+    .update({ stock_actual: stock_nuevo })
+    .eq("id", movimiento.producto_id);
+
+  if (updateError) throw updateError;
+
+  return { stock_anterior, stock_nuevo };
 }
 
 /**

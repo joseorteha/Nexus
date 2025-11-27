@@ -3,21 +3,22 @@
 export type TipoUsuario = "normal" | "cooperativa" | "empresa" | "admin";
 
 // Definir qué rutas puede acceder cada tipo de usuario
+// NOTA: Los Route Groups (normal), (shared), etc. son invisibles en las URLs
 export const PERMISSIONS = {
   // Rutas compartidas (TODOS pueden acceder)
   shared: [
     "/dashboard",
     "/dashboard/profile",
-    "/dashboard/marketplace",
+    "/dashboard/marketplace", // (shared)/marketplace - vista diferente según tipo
   ],
 
   // Solo Usuario Normal
   normal: [
-    "/dashboard/productos",
-    "/dashboard/cooperativas",
-    "/dashboard/cooperativas/crear",
-    "/dashboard/match",
-    "/dashboard/ventas",
+    "/dashboard/productos",           // (normal)/productos
+    "/dashboard/cooperativas",        // (normal)/cooperativas
+    "/dashboard/cooperativas/crear",  // (normal)/cooperativas/crear
+    "/dashboard/ventas",              // (normal)/ventas
+    "/dashboard/match",               // (shared)/match - solo para encontrar cooperativas
   ],
 
   // Solo Cooperativa
