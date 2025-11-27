@@ -9,10 +9,13 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@heroui/navbar": "^2.2.25",
     "clsx": "^2.1.1",
+    "mapbox-gl": "^3.16.0",
     "next": "16.0.4",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "swiper": "^12.0.3",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

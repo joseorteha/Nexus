@@ -1,24 +1,24 @@
-// 🏠 LANDING PAGE (Página pública)
-// Responsable: Guille
-// URL: /
+import HeroSection from "../components/modules/landing/HeroSection";
+import Features from "../components/modules/landing/Features";
+import Footer from "../components/modules/landing/Footer";
+import ProblemSection from "../components/modules/landing/problem";
+import SolutionSection from "../components/modules/landing/Solution";
+import whoWeAre from "../components/modules/landing/WhoIsFor";
+import Beneficios from "../components/modules/landing/BenefitsSection";
+import CTA from "../components/modules/landing/CTASection";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="min-h-screen">
-      <h1 className="text-4xl font-bold text-center pt-20">
-        🚀 Nexus - Landing Page
-      </h1>
-      <p className="text-center text-gray-600 mt-4">
-        Responsable: Guille
-      </p>
-      <div className="max-w-2xl mx-auto mt-10 p-6 bg-blue-50 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4">📝 Tareas:</h2>
-        <ul className="space-y-2">
-          <li>✅ Crear componentes en: src/components/modules/landing/</li>
-          <li>✅ Hero Section, Features, Footer</li>
-          <li>✅ Links a /login y /register</li>
-        </ul>
-      </div>
-    </div>
+    <main>
+    
+      <HeroSection />
+      <ProblemSection />
+      <SolutionSection />
+      <Features />
+      {whoWeAre()}
+      <Beneficios />
+      <CTA />
+      <Footer />
+    </main>
   );
 }

@@ -8,6 +8,7 @@ export {};
  * Componentes para este módulo:
  * - HeroSection.tsx - Sección hero principal
  * - Features.tsx - Características del producto
+ * - Mapa con MapBox
  * - Footer.tsx - Footer de la landing
  * - CTAButton.tsx - Call to action buttons
  */
