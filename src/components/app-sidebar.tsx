@@ -21,7 +21,8 @@ import {
   UserCircle,
   BadgeCheck,
   Building2,
-  List
+  List,
+  Clock
 } from "lucide-react";
 import {
   Sidebar,
@@ -194,24 +195,24 @@ export function AppSidebar() {
       icon: Home,
     },
     {
+      title: "Solicitudes",
+      url: "/dashboard/solicitudes",
+      icon: Clock,
+    },
+    {
+      title: "Miembros",
+      url: "/dashboard/miembros",
+      icon: Users,
+    },
+    {
       title: "Productos",
       url: "/dashboard/productos",
       icon: Package,
     },
     {
-      title: "Oportunidades",
+      title: "Marketplace",
       url: "/dashboard/marketplace",
       icon: ShoppingCart,
-    },
-    {
-      title: "Mi Cooperativa",
-      url: "/dashboard/cooperativa",
-      icon: Users,
-    },
-    {
-      title: "ERP",
-      url: "/dashboard/erp",
-      icon: BarChart3,
     },
     {
       title: "Perfil",
@@ -277,9 +278,29 @@ export function AppSidebar() {
       icon: Users,
     },
     {
+      title: "Cooperativas",
+      url: "/dashboard/cooperativas-admin",
+      icon: Users,
+    },
+    {
+      title: "Empresas",
+      url: "/dashboard/empresas-admin",
+      icon: Building2,
+    },
+    {
       title: "Solicitudes",
       url: "/dashboard/solicitudes-cooperativas",
       icon: Store,
+    },
+    {
+      title: "Productos",
+      url: "/dashboard/productos",
+      icon: Package,
+    },
+    {
+      title: "Marketplace",
+      url: "/dashboard/marketplace",
+      icon: ShoppingCart,
     },
     {
       title: "Polos Económicos",

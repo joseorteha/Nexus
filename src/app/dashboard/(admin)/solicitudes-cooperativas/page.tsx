@@ -93,7 +93,7 @@ export default function SolicitudesCooperativasPage() {
       if (errorCooperativa) throw errorCooperativa;
 
       // 2. Agregar al fundador como miembro
-      await supabase
+      const { error: miembroError } = await supabase
         .from("cooperativa_miembros")
         .insert({
           cooperativa_id: cooperativa.id,
@@ -101,14 +101,21 @@ export default function SolicitudesCooperativasPage() {
           rol: "fundador"
         });
 
+      if (miembroError) throw miembroError;
+
       // 3. Actualizar tipo de usuario a cooperativa
-      await supabase
+      const { error: updateUserError } = await supabase
         .from("usuarios")
-        .update({ tipo_usuario: "cooperativa" })
+        .update({ 
+          tipo_usuario: "cooperativa",
+          rol: "normal_user" // Mantener rol normal_user pero cambiar tipo
+        })
         .eq("id", solicitud.user_id);
 
+      if (updateUserError) throw updateUserError;
+
       // 4. Actualizar la solicitud
-      await supabase
+      const { error: solicitudError } = await supabase
         .from("solicitudes_cooperativas")
         .update({
           estado: "aprobada",
@@ -118,7 +125,13 @@ export default function SolicitudesCooperativasPage() {
         })
         .eq("id", solicitud.id);
 
-      alert("✅ Solicitud aprobada. La cooperativa ha sido creada y el usuario ha sido promovido.");
+      if (solicitudError) throw solicitudError;
+
+      alert("✅ ¡Solicitud aprobada!\n\n" +
+            `• Cooperativa "${solicitud.nombre_cooperativa}" creada\n` +
+            `• ${solicitud.nombre_usuario} ahora es fundador\n` +
+            `• Cuenta convertida a tipo: cooperativa\n` +
+            `• Ahora verá el dashboard de cooperativa`);
       loadSolicitudes();
       setSolicitudSeleccionada(null);
     } catch (error: any) {
