@@ -1,0 +1,225 @@
+ [
+  {
+    "id": "1",
+    "name": "Cooperativa Café Sierra Zongolica",
+    "type": "Cooperativa",
+    "polo": "Zongolica",
+    "industry": "Agroindustria",
+    "tier": "Pro",
+    "offers": [
+      "Café de altura orgánico",
+      "Café tostado artesanal",
+      "Capacitación en cultivo de café"
+    ],
+    "needs": [
+      "Servicios de logística regional",
+      "Diseño de empaque biodegradable",
+      "Financiamiento para maquinaria de tostado",
+      "Desarrollo de sitio web y e-commerce"
+    ],
+    "urgency": "Alta",
+    "financing": "Busca",
+    "description": "Cooperativa de 45 productores de café de altura. Buscamos modernizar nuestra operación y llegar a más mercados regionales. Necesitamos urgente mejorar nuestro empaque y logística para la temporada alta.",
+    "logoUrl": "/logos/cafe-sierra.png",
+    "email": "contacto@cafesierra.coop",
+    "phone": "271-123-4567",
+    "address": "Zongolica, Veracruz",
+    "rating": 4.8,
+    "reviewCount": 23
+  },
+  {
+    "id": "2",
+    "name": "Transportes Orizaba Express",
+    "type": "PYME",
+    "polo": "Orizaba",
+    "industry": "Logística",
+    "tier": "Pro",
+    "offers": [
+      "Logística regional",
+      "Transporte de carga",
+      "Distribución a zonas montañosas",
+      "Almacenamiento temporal"
+    ],
+    "needs": [
+      "Mantenimiento automotriz especializado",
+      "Sistema de rastreo GPS",
+      "Clientes constantes de la región"
+    ],
+    "urgency": "Media",
+    "financing": "Ninguno",
+    "description": "Empresa de transporte con 15 años de experiencia en la región de Altas Montañas. Contamos con flota de 12 vehículos y conocemos todas las rutas de la sierra.",
+    "logoUrl": "/logos/orizaba-express.png",
+    "email": "ventas@orizabaexpress.com",
+    "phone": "272-987-6543",
+    "address": "Orizaba, Veracruz",
+    "rating": 4.6,
+    "reviewCount": 45
+  },
+  {
+    "id": "3",
+    "name": "Envases Ecológicos de las Montañas",
+    "type": "Startup",
+    "polo": "Córdoba",
+    "industry": "Comercio",
+    "tier": "Pro",
+    "offers": [
+      "Diseño de empaque biodegradable",
+      "Bolsas de papel reciclado",
+      "Etiquetas personalizadas",
+      "Consultoría en branding ecológico"
+    ],
+    "needs": [
+      "Proveedores de papel reciclado",
+      "Clientes en agroindustria",
+      "Financiamiento para expandir producción"
+    ],
+    "urgency": "Media",
+    "financing": "Busca",
+    "description": "Startup enfocada en empaques sostenibles para productos regionales. Trabajamos con materiales 100% biodegradables y ayudamos a marcas locales a tener presencia profesional.",
+    "logoUrl": "/logos/envases-eco.png",
+    "email": "hola@envaseseco.mx",
+    "phone": "271-555-7890",
+    "address": "Córdoba, Veracruz",
+    "rating": 4.9,
+    "reviewCount": 18
+  },
+  {
+    "id": "4",
+    "name": "Caja Popular Solidaria",
+    "type": "Empresa Social",
+    "polo": "Zongolica",
+    "industry": "Servicios",
+    "tier": "Premium",
+    "offers": [
+      "Financiamiento social para PYMES",
+      "Créditos refaccionarios",
+      "Microcréditos para cooperativas",
+      "Asesoría financiera gratuita"
+    ],
+    "needs": [
+      "Proyectos de impacto social para financiar",
+      "Empresas con buen historial crediticio"
+    ],
+    "urgency": "Baja",
+    "financing": "Ofrece",
+    "description": "Institución financiera social con 20 años apoyando el desarrollo económico de la región. Ofrecemos créditos con tasas preferenciales para cooperativas y empresas sociales.",
+    "logoUrl": "/logos/caja-solidaria.png",
+    "email": "creditos@cajasolidaria.org",
+    "phone": "271-234-5678",
+    "address": "Zongolica, Veracruz",
+    "rating": 5.0,
+    "reviewCount": 67
+  },
+  {
+    "id": "5",
+    "name": "ITSZ - Centro de Innovación",
+    "type": "Gobierno/Institución",
+    "polo": "Zongolica",
+    "industry": "Tecnología",
+    "tier": "Free",
+    "offers": [
+      "Capacitación en ERP gratuita",
+      "Consultoría técnica",
+      "Desarrollo de sitios web para cooperativas",
+      "Asesoría en transformación digital"
+    ],
+    "needs": [
+      "Proyectos reales para práctica estudiantil",
+      "Empresas dispuestas a adoptar tecnología"
+    ],
+    "urgency": "Baja",
+    "financing": "Ninguno",
+    "description": "Instituto Tecnológico Superior de Zongolica. Apoyamos la digitalización de empresas locales mediante proyectos de vinculación con estudiantes de sistemas.",
+    "logoUrl": "/logos/itsz.png",
+    "email": "vinculacion@itsz.edu.mx",
+    "phone": "271-345-6789",
+    "address": "Zongolica, Veracruz",
+    "rating": 4.7,
+    "reviewCount": 12
+  },
+  {
+    "id": "6",
+    "name": "Muebles Rústicos Don Manuel",
+    "type": "PYME",
+    "polo": "Tehuipango",
+    "industry": "Artesanía",
+    "tier": "Free",
+    "offers": [
+      "Muebles de madera artesanal",
+      "Sillas y mesas rústicas",
+      "Diseño personalizado",
+      "Muebles para restaurantes"
+    ],
+    "needs": [
+      "Barniz y acabados de calidad",
+      "Logística para envíos",
+      "Presencia en marketplace",
+      "Financiamiento para expandir taller"
+    ],
+    "urgency": "Alta",
+    "financing": "Busca",
+    "description": "Taller familiar con 30 años de tradición en muebles de madera de la región. Queremos digitalizar nuestro negocio y vender fuera de la zona. Nuestros productos son únicos y de alta calidad.",
+    "logoUrl": "/logos/muebles-manuel.png",
+    "email": "donmanuel.muebles@gmail.com",
+    "phone": "271-456-7890",
+    "address": "Tehuipango, Veracruz",
+    "rating": 4.5,
+    "reviewCount": 8
+  },
+  {
+    "id": "7",
+    "name": "AgroTech Solutions",
+    "type": "Startup",
+    "polo": "Orizaba",
+    "industry": "Tecnología",
+    "tier": "Premium",
+    "offers": [
+      "Sistema de rastreo GPS para transporte",
+      "Software de gestión de inventario",
+      "Apps móviles para ventas",
+      "Automatización de procesos"
+    ],
+    "needs": [
+      "Clientes en agroindustria y logística",
+      "Casos de éxito para portfolio"
+    ],
+    "urgency": "Media",
+    "financing": "Ninguno",
+    "description": "Startup tecnológica enfocada en digitalizar la cadena de suministro agroindustrial. Ofrecemos soluciones personalizadas con precios accesibles para PYMES de la región.",
+    "logoUrl": "/logos/agrotech.png",
+    "email": "contacto@agrotechsolutions.mx",
+    "phone": "272-567-8901",
+    "address": "Orizaba, Veracruz",
+    "rating": 4.8,
+    "reviewCount": 15
+  },
+  {
+    "id": "8",
+    "name": "Textiles Tradicionales de las Montañas",
+    "type": "Cooperativa",
+    "polo": "Altas Montañas (General)",
+    "industry": "Artesanía",
+    "tier": "Pro",
+    "offers": [
+      "Textiles bordados a mano",
+      "Ropa tradicional indígena",
+      "Bolsos artesanales",
+      "Talleres de bordado tradicional"
+    ],
+    "needs": [
+      "Diseño de marca y etiquetas",
+      "Marketplace para venta online",
+      "Financiamiento para compra de materia prima",
+      "Logística para envíos nacionales"
+    ],
+    "urgency": "Alta",
+    "financing": "Busca",
+    "description": "Cooperativa de 60 artesanas de comunidades indígenas. Preservamos técnicas ancestrales de bordado. Buscamos escalar nuestro negocio sin perder nuestra esencia cultural.",
+    "logoUrl": "/logos/textiles-montana.png",
+    "email": "ventas@textilesmontana.coop",
+    "phone": "271-678-9012",
+    "address": "Altas Montañas, Veracruz",
+    "rating": 4.9,
+    "reviewCount": 34
+  }
+]
