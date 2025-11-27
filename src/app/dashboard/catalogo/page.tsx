@@ -9,6 +9,7 @@ import AddCompanyModal from "@/components/modules/catalogo/AddCompanyModal";
 interface Company {
   id: string;
   name: string;
+  
   description: string;
   category: string;
   rating: number;
