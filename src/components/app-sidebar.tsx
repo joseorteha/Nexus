@@ -22,7 +22,8 @@ import {
   BadgeCheck,
   Building2,
   List,
-  Clock
+  Clock,
+  MessageCircle
 } from "lucide-react";
 import {
   Sidebar,
@@ -193,6 +194,11 @@ export function AppSidebar() {
       title: "Dashboard",
       url: "/dashboard",
       icon: Home,
+    },
+    {
+      title: "Mensajes",
+      url: "/dashboard/mensajes",
+      icon: MessageCircle,
     },
     {
       title: "Solicitudes",

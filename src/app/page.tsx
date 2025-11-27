@@ -1,3 +1,4 @@
+import NavBar from "../components/modules/landing/NavBar";
 import HeroSection from "../components/modules/landing/HeroSection";
 import Features from "../components/modules/landing/Features";
 import Footer from "../components/modules/landing/Footer";
@@ -10,7 +11,7 @@ import CTA from "../components/modules/landing/CTASection";
 export default function HomePage() {
   return (
     <main>
-    
+      <NavBar />
       <HeroSection />
       <ProblemSection />
       <SolutionSection />

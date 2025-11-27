@@ -104,15 +104,23 @@ export default function SolicitudesCooperativasPage() {
       if (miembroError) throw miembroError;
 
       // 3. Actualizar tipo de usuario a cooperativa
-      const { error: updateUserError } = await supabase
+      console.log(`🔄 Convirtiendo usuario ${solicitud.user_id} a cooperativa...`);
+      
+      const { data: updateData, error: updateUserError } = await supabase
         .from("usuarios")
         .update({ 
           tipo_usuario: "cooperativa",
           rol: "normal_user" // Mantener rol normal_user pero cambiar tipo
         })
-        .eq("id", solicitud.user_id);
+        .eq("id", solicitud.user_id)
+        .select();
 
-      if (updateUserError) throw updateUserError;
+      if (updateUserError) {
+        console.error("❌ Error actualizando tipo de usuario:", updateUserError);
+        throw updateUserError;
+      }
+
+      console.log("✅ Usuario convertido a cooperativa:", updateData);
 
       // 4. Actualizar la solicitud
       const { error: solicitudError } = await supabase
