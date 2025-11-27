@@ -46,6 +46,21 @@ export function OnboardingUsuarioNormal({ onComplete }: OnboardingProps) {
     if (step > 1) setStep(step - 1);
   };
 
+  const handleSkipStep = () => {
+    // Omitir paso opcional y avanzar
+    if (step === 3) {
+      // Omitir capacidad de producción
+      setFormData(prev => ({ ...prev, productionCapacity: "" }));
+    } else if (step === 4) {
+      // Omitir región
+      setFormData(prev => ({ ...prev, region: "" }));
+    } else if (step === 5) {
+      // Omitir objetivo
+      setFormData(prev => ({ ...prev, goal: "" }));
+    }
+    handleNext();
+  };
+
   const handleComplete = () => {
     onComplete({
       ...formData,
@@ -63,12 +78,15 @@ export function OnboardingUsuarioNormal({ onComplete }: OnboardingProps) {
   };
 
   const addProduct = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && e.currentTarget.value.trim()) {
-      setFormData(prev => ({
-        ...prev,
-        products: [...prev.products, e.currentTarget.value.trim()]
-      }));
-      e.currentTarget.value = "";
+    if (e.key === "Enter") {
+      const value = e.currentTarget.value.trim();
+      if (value) {
+        setFormData(prev => ({
+          ...prev,
+          products: [...prev.products, value]
+        }));
+        e.currentTarget.value = "";
+      }
     }
   };
 
@@ -187,7 +205,7 @@ export function OnboardingUsuarioNormal({ onComplete }: OnboardingProps) {
             </div>
           )}
 
-          {/* PASO 3: Capacidad de Producción */}
+          {/* PASO 3: Capacidad de Producción (OPCIONAL) */}
           {step === 3 && (
             <div className="space-y-6">
               <div className="text-center mb-8">
@@ -200,6 +218,9 @@ export function OnboardingUsuarioNormal({ onComplete }: OnboardingProps) {
                 <p className="text-gray-600">
                   Aproximadamente, ¿cuánto puedes producir al mes?
                 </p>
+                <Badge variant="info" className="mt-2">
+                  Opcional - Puedes omitir este paso
+                </Badge>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -231,8 +252,11 @@ export function OnboardingUsuarioNormal({ onComplete }: OnboardingProps) {
                   ¿Dónde te ubicas?
                 </h2>
                 <p className="text-gray-600">
-                  Esto nos ayuda a conectarte con cooperativas cercanas
+                  Tu ubicación nos ayuda a conectarte con compradores cercanos
                 </p>
+                <Badge variant="info" className="mt-2">
+                  Opcional - Puedes omitir este paso
+                </Badge>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -253,7 +277,7 @@ export function OnboardingUsuarioNormal({ onComplete }: OnboardingProps) {
             </div>
           )}
 
-          {/* PASO 5: Objetivo */}
+          {/* PASO 5: Objetivo (OPCIONAL) */}
           {step === 5 && (
             <div className="space-y-6">
               <div className="text-center mb-8">
@@ -266,6 +290,9 @@ export function OnboardingUsuarioNormal({ onComplete }: OnboardingProps) {
                 <p className="text-gray-600">
                   ¿Qué te gustaría hacer en Nexus?
                 </p>
+                <Badge variant="info" className="mt-2">
+                  Opcional - Puedes omitir este paso
+                </Badge>
               </div>
 
               <div className="space-y-4">
@@ -347,30 +374,41 @@ export function OnboardingUsuarioNormal({ onComplete }: OnboardingProps) {
               Anterior
             </Button>
 
-            {step < totalSteps ? (
-              <Button
-                onClick={handleNext}
-                disabled={
-                  (step === 1 && formData.products.length === 0) ||
-                  (step === 2 && formData.categories.length === 0) ||
-                  (step === 3 && !formData.productionCapacity) ||
-                  (step === 4 && !formData.region)
-                }
-                className="flex items-center gap-2 bg-gradient-to-r from-primary to-secondary"
-              >
-                Siguiente
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            ) : (
-              <Button
-                onClick={handleComplete}
-                disabled={!formData.goal}
-                className="flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-700"
-              >
-                <Check className="w-4 h-4" />
-                Completar
-              </Button>
-            )}
+            <div className="flex items-center gap-3">
+              {/* Botón Omitir solo en pasos opcionales (3, 4 y 5) */}
+              {(step === 3 || step === 4 || step === 5) && (
+                <Button
+                  onClick={handleSkipStep}
+                  variant="ghost"
+                  className="text-gray-600 hover:text-gray-800"
+                >
+                  Omitir este paso
+                </Button>
+              )}
+
+              {step < totalSteps ? (
+                <Button
+                  onClick={handleNext}
+                  disabled={
+                    (step === 1 && formData.products.length === 0) ||
+                    (step === 2 && formData.categories.length === 0)
+                    // Pasos 3, 4 y 5 son opcionales, no bloquean
+                  }
+                  className="flex items-center gap-2 bg-gradient-to-r from-primary to-secondary"
+                >
+                  Siguiente
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleComplete}
+                  className="flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-700"
+                >
+                  <Check className="w-4 h-4" />
+                  Completar
+                </Button>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>

@@ -39,12 +39,10 @@ export default function LoginPage() {
       {/* IZQUIERDA */}
       <div className="relative flex-1 hidden lg:flex items-center justify-center h-screen bg-primary px-20 overflow-hidden">
         <div className="relative z-10 w-full max-w-md">
-          <Image
-            src="/Beeltravel-logo.webp"
-            width={150}
-            height={80}
-            alt="logo"
-          />
+          {/* Logo lateral - reemplazar con tu logo */}
+          <div className="mb-8 w-40 h-20 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+            <span className="text-3xl font-bold text-white">NEXUS</span>
+          </div>
 
           <div className="mt-16 space-y-3">
             <h3 className="text-white text-3xl font-bold leading-snug">
@@ -80,13 +78,10 @@ export default function LoginPage() {
         <div className="mx-auto w-full max-w-md py-10 px-4">
           <div className="bg-white p-8 rounded-xl shadow-lg space-y-6 text-gray-600">
             
-            <Image
-              src="/logo.webp"
-              width={150}
-              height={80}
-              alt="logo"
-              className="lg:hidden mx-auto"
-            />
+            {/* Logo placeholder - reemplazar con tu logo */}
+            <div className="mx-auto w-40 h-20 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center">
+              <span className="text-3xl font-bold text-white">NEXUS</span>
+            </div>
 
             <div className="text-center space-y-2">
               <h3 className="text-gray-800 text-2xl font-bold">Iniciar Sesión</h3>

@@ -59,6 +59,21 @@ export function OnboardingCooperativa({ onComplete }: OnboardingProps) {
     });
   };
 
+  const handleSkipStep = () => {
+    if (step === 3) {
+      // Omitir capacidad y región
+      setFormData(prev => ({ 
+        ...prev, 
+        productionCapacity: "",
+        region: "" 
+      }));
+    } else if (step === 4) {
+      // Omitir certificaciones
+      setFormData(prev => ({ ...prev, certifications: [] }));
+    }
+    handleNext();
+  };
+
   const toggleItem = (list: string[], item: string) => {
     return list.includes(item)
       ? list.filter(i => i !== item)
@@ -66,12 +81,15 @@ export function OnboardingCooperativa({ onComplete }: OnboardingProps) {
   };
 
   const addProduct = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && e.currentTarget.value.trim()) {
-      setFormData(prev => ({
-        ...prev,
-        products: [...prev.products, e.currentTarget.value.trim()]
-      }));
-      e.currentTarget.value = "";
+    if (e.key === "Enter") {
+      const value = e.currentTarget.value.trim();
+      if (value) {
+        setFormData(prev => ({
+          ...prev,
+          products: [...prev.products, value]
+        }));
+        e.currentTarget.value = "";
+      }
     }
   };
 
@@ -237,6 +255,9 @@ export function OnboardingCooperativa({ onComplete }: OnboardingProps) {
                 <p className="text-gray-600">
                   Información operativa de la cooperativa
                 </p>
+                <Badge variant="info" className="mt-3">
+                  Opcional - Puedes omitir este paso
+                </Badge>
               </div>
 
               <div className="space-y-6">
@@ -298,6 +319,9 @@ export function OnboardingCooperativa({ onComplete }: OnboardingProps) {
                 <p className="text-gray-600">
                   ¿Cuentan con alguna certificación? (Opcional)
                 </p>
+                <Badge variant="info" className="mt-3">
+                  Opcional - Puedes omitir este paso
+                </Badge>
               </div>
 
               <div className="grid grid-cols-1 gap-3">
@@ -371,7 +395,7 @@ export function OnboardingCooperativa({ onComplete }: OnboardingProps) {
                     <p className="text-sm font-medium text-gray-700 mb-2">Categorías:</p>
                     <div className="flex flex-wrap gap-1">
                       {formData.categories.map((c, i) => (
-                        <Badge key={i} variant="secondary" size="sm">{c}</Badge>
+                        <Badge key={i} variant="default" size="sm">{c}</Badge>
                       ))}
                     </div>
                   </div>
@@ -423,28 +447,39 @@ export function OnboardingCooperativa({ onComplete }: OnboardingProps) {
               Anterior
             </Button>
 
-            {step < totalSteps ? (
-              <Button
-                onClick={handleNext}
-                disabled={
-                  (step === 1 && (!formData.name || !formData.description)) ||
-                  (step === 2 && (formData.products.length === 0 || formData.categories.length === 0)) ||
-                  (step === 3 && (!formData.productionCapacity || !formData.region))
-                }
-                className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600"
-              >
-                Siguiente
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            ) : (
-              <Button
-                onClick={handleComplete}
-                className="flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-700"
-              >
-                <Check className="w-4 h-4" />
-                Enviar Solicitud
-              </Button>
-            )}
+            <div className="flex gap-2">
+              {(step === 3 || step === 4) && (
+                <Button
+                  onClick={handleSkipStep}
+                  variant="ghost"
+                  className="flex items-center gap-2"
+                >
+                  Omitir este paso
+                </Button>
+              )}
+
+              {step < totalSteps ? (
+                <Button
+                  onClick={handleNext}
+                  disabled={
+                    (step === 1 && (!formData.name || !formData.description)) ||
+                    (step === 2 && (formData.products.length === 0 || formData.categories.length === 0))
+                  }
+                  className="flex items-center gap-2 bg-linear-to-r from-purple-600 to-pink-600"
+                >
+                  Siguiente
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleComplete}
+                  className="flex items-center gap-2 bg-linear-to-r from-green-600 to-green-700"
+                >
+                  <Check className="w-4 h-4" />
+                  Enviar Solicitud
+                </Button>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>

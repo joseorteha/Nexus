@@ -1,14 +1,10 @@
-import "../globals.css";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Nexus - Autenticación",
+  description: "Inicia sesión o regístrate en Nexus",
+};
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
-
-    
-  return (
-    <html lang="en">
-      <head>
-        <title>Nexus Auth</title>
-      </head>
-      <body className="">{children}</body>
-    </html>
-  );
+  return <>{children}</>;
 }

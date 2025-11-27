@@ -47,9 +47,9 @@ const fileName = `profile/${Date.now()}-${avatarFile.name}`;
 
 
     // ------------------------------
-    // 2. Crear usuario en Supabase
+    // 2. Crear usuario en Supabase Auth
     // ------------------------------
-    const { error } = await supabase.auth.signUp({
+    const { data: authData, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -61,6 +61,7 @@ const fileName = `profile/${Date.now()}-${avatarFile.name}`;
           rol: "normal_user",
           tipo_usuario: "normal"
         },
+        emailRedirectTo: `${window.location.origin}/auth/onboarding`
       },
     });
 
@@ -70,7 +71,60 @@ const fileName = `profile/${Date.now()}-${avatarFile.name}`;
       return;
     }
 
-    alert("Cuenta creada. Revisa tu correo para confirmarla.");
+    // ------------------------------
+    // 3. Crear entrada en tabla usuarios
+    // ------------------------------
+    if (authData.user) {
+      // Verificar si ya existe el usuario
+      const { data: existingUser } = await supabase
+        .from("usuarios")
+        .select("id")
+        .eq("id", authData.user.id)
+        .single();
+
+      // Si ya existe, solo redirigir
+      if (existingUser) {
+        console.log("Usuario ya existe en la tabla, redirigiendo...");
+        alert("¡Bienvenido de vuelta! Completa tu perfil.");
+        window.location.href = "/auth/onboarding";
+        setLoading(false);
+        return;
+      }
+
+      // Si no existe, crear nuevo registro
+      const { error: insertError } = await supabase
+        .from("usuarios")
+        .insert({
+          id: authData.user.id,
+          nombre,
+          apellidos,
+          telefono,
+          avatar_url,
+          rol: "normal_user",
+          tipo_usuario: "normal",
+          onboarding_completed: false,
+          onboarding_skipped: false,
+        });
+
+      if (insertError) {
+        // Si es error de duplicado, ignorar y continuar
+        if (insertError.code === "23505") {
+          console.log("Usuario ya existía, continuando...");
+        } else {
+          console.error("Error al crear perfil:", insertError);
+          alert("Error al crear perfil. Por favor contacta soporte.");
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Redirigir a onboarding
+      alert("¡Cuenta creada exitosamente! Ahora completa tu perfil.");
+      window.location.href = "/auth/onboarding";
+    } else {
+      alert("Cuenta creada. Revisa tu correo para confirmarla.");
+    }
+    
     setLoading(false);
   }
 
@@ -79,13 +133,10 @@ const fileName = `profile/${Date.now()}-${avatarFile.name}`;
       {/* IZQUIERDA */}
       <div className="relative flex-1 hidden lg:flex items-center justify-center h-screen bg-primary px-20 overflow-hidden">
         <div className="relative z-10 w-full max-w-md">
-          <Image
-            src="/Beeltravel-logo.webp"
-            alt="logo"
-            width={150}
-            height={80}
-            className="mb-8"
-          />
+          {/* Logo lateral - reemplazar con tu logo */}
+          <div className="mb-8 w-40 h-20 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+            <span className="text-3xl font-bold text-white">NEXUS</span>
+          </div>
 
           <h3 className="text-white text-3xl font-bold leading-snug">
             Bienvenido a Nexus
@@ -121,13 +172,10 @@ const fileName = `profile/${Date.now()}-${avatarFile.name}`;
       <div className="flex-1 h-screen overflow-y-auto bg-gray-50">
         <div className="mx-auto w-full max-w-md py-10 px-4">
           <div className="bg-white p-8 rounded-xl shadow-lg space-y-6 text-gray-600">
-            <Image
-              src="/logo.webp"
-              alt="logo"
-              width={150}
-              height={80}
-              className="lg:hidden mx-auto"
-            />
+            {/* Logo placeholder - reemplazar con tu logo */}
+            <div className="mx-auto w-40 h-20 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center">
+              <span className="text-3xl font-bold text-white">NEXUS</span>
+            </div>
 
             <div className="text-center space-y-2">
               <h3 className="text-gray-800 text-2xl font-bold">Crear cuenta en Nexus</h3>
@@ -141,7 +189,7 @@ const fileName = `profile/${Date.now()}-${avatarFile.name}`;
 
               <p className="text-sm">
                 ¿Eres una empresa?
-                <a href="/register/empresa" className="font-medium text-primary hover:text-primary-hover">
+                <a href="/auth/register/empresa" className="font-medium text-primary hover:text-primary-hover">
                   {" "}Regístrate aquí
                 </a>
               </p>

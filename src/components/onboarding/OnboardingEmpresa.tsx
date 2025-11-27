@@ -66,6 +66,28 @@ export function OnboardingEmpresa({ onComplete }: OnboardingProps) {
     });
   };
 
+  const handleSkipStep = () => {
+    if (step === 3) {
+      // Omitir volumen y frecuencia
+      setFormData(prev => ({ 
+        ...prev, 
+        purchaseVolume: "", 
+        purchaseFrequency: "" 
+      }));
+    } else if (step === 4) {
+      // Omitir presupuesto y requisitos
+      setFormData(prev => ({ 
+        ...prev, 
+        budget: "", 
+        requirements: [] 
+      }));
+    } else if (step === 5) {
+      // Omitir región (aunque es importante para matching)
+      setFormData(prev => ({ ...prev, region: "" }));
+    }
+    handleNext();
+  };
+
   const toggleItem = (list: string[], item: string) => {
     return list.includes(item)
       ? list.filter(i => i !== item)
@@ -73,12 +95,15 @@ export function OnboardingEmpresa({ onComplete }: OnboardingProps) {
   };
 
   const addProduct = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && e.currentTarget.value.trim()) {
-      setFormData(prev => ({
-        ...prev,
-        productsNeeded: [...prev.productsNeeded, e.currentTarget.value.trim()]
-      }));
-      e.currentTarget.value = "";
+    if (e.key === "Enter") {
+      const value = e.currentTarget.value.trim();
+      if (value) {
+        setFormData(prev => ({
+          ...prev,
+          productsNeeded: [...prev.productsNeeded, value]
+        }));
+        e.currentTarget.value = "";
+      }
     }
   };
 
@@ -245,6 +270,9 @@ export function OnboardingEmpresa({ onComplete }: OnboardingProps) {
                 <p className="text-gray-600">
                   Información operativa de tu empresa
                 </p>
+                <Badge variant="info" className="mt-3">
+                  Opcional - Puedes omitir este paso
+                </Badge>
               </div>
 
               <div className="space-y-6">
@@ -305,8 +333,11 @@ export function OnboardingEmpresa({ onComplete }: OnboardingProps) {
                   Presupuesto y Requisitos
                 </h2>
                 <p className="text-gray-600">
-                  Especificaciones para tus compras
+                  Información adicional que ayuda a las cooperativas
                 </p>
+                <Badge variant="info" className="mt-3">
+                  Opcional - Puedes omitir este paso
+                </Badge>
               </div>
 
               <div className="space-y-6">
@@ -457,30 +488,41 @@ export function OnboardingEmpresa({ onComplete }: OnboardingProps) {
               Anterior
             </Button>
 
-            {step < totalSteps ? (
-              <Button
-                onClick={handleNext}
-                disabled={
-                  (step === 1 && (!formData.companyName || !formData.rfc)) ||
-                  (step === 2 && (formData.productsNeeded.length === 0 || formData.categories.length === 0)) ||
-                  (step === 3 && (!formData.purchaseVolume || !formData.purchaseFrequency)) ||
-                  (step === 4 && !formData.budget)
-                }
-                className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600"
-              >
-                Siguiente
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            ) : (
-              <Button
-                onClick={handleComplete}
-                disabled={!formData.region}
-                className="flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-700"
-              >
-                <Check className="w-4 h-4" />
-                Completar Perfil
-              </Button>
-            )}
+            <div className="flex gap-2">
+              {(step === 3 || step === 4) && (
+                <Button
+                  onClick={handleSkipStep}
+                  variant="ghost"
+                  className="flex items-center gap-2"
+                >
+                  Omitir este paso
+                </Button>
+              )}
+
+              {step < totalSteps ? (
+                <Button
+                  onClick={handleNext}
+                  disabled={
+                    (step === 1 && (!formData.companyName || !formData.rfc)) ||
+                    (step === 2 && (formData.productsNeeded.length === 0 || formData.categories.length === 0)) ||
+                    (step === 5 && !formData.region)
+                  }
+                  className="flex items-center gap-2 bg-linear-to-r from-blue-600 to-indigo-600"
+                >
+                  Siguiente
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleComplete}
+                  disabled={!formData.region}
+                  className="flex items-center gap-2 bg-linear-to-r from-green-600 to-green-700"
+                >
+                  <Check className="w-4 h-4" />
+                  Completar Perfil
+                </Button>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>
