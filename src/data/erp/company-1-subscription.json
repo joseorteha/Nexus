@@ -1,0 +1,19 @@
+{
+  "id": "sub-001",
+  "companyId": "1",
+  "planType": "Premium",
+  "status": "trial",
+  "startDate": "2025-11-01T00:00:00.000Z",
+  "trialEndDate": "2025-12-01T00:00:00.000Z",
+  "autoRenew": false,
+  "features": {
+    "maxProducts": 500,
+    "maxCustomers": 200,
+    "maxSalesPerMonth": 1000,
+    "advancedReports": true,
+    "apiAccess": false,
+    "multiUser": true,
+    "emailSupport": true,
+    "prioritySupport": false
+  }
+}

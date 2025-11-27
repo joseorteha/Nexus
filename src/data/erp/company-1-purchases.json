@@ -1,0 +1,80 @@
+[
+  {
+    "id": "purch-1",
+    "companyId": "1",
+    "purchaseNumber": "CMP-001",
+    "supplierId": "supp-1",
+    "supplierName": "Productores Locales Zongolica",
+    "purchaseDate": "2025-11-20T10:00:00.000Z",
+    "items": [
+      {
+        "productId": "inv-1",
+        "productName": "Café de altura orgánico (grano verde)",
+        "quantity": 100,
+        "unit": "kg",
+        "unitPrice": 120,
+        "total": 12000
+      }
+    ],
+    "total": 12000,
+    "paymentStatus": "Pagado",
+    "notes": "Compra de temporada, calidad excelente",
+    "createdAt": "2025-11-20T10:00:00.000Z",
+    "createdBy": "user-1"
+  },
+  {
+    "id": "purch-2",
+    "companyId": "1",
+    "purchaseNumber": "CMP-002",
+    "supplierId": "supp-2",
+    "supplierName": "Envases Ecológicos de las Montañas",
+    "purchaseDate": "2025-11-18T14:30:00.000Z",
+    "items": [
+      {
+        "productId": "inv-3",
+        "productName": "Empaque biodegradable 1kg",
+        "quantity": 200,
+        "unit": "pz",
+        "unitPrice": 8,
+        "total": 1600
+      },
+      {
+        "productId": "inv-4",
+        "productName": "Etiquetas personalizadas",
+        "quantity": 300,
+        "unit": "pz",
+        "unitPrice": 1.5,
+        "total": 450
+      }
+    ],
+    "total": 2050,
+    "paymentStatus": "Pagado",
+    "notes": "Pago de contado, 5% descuento aplicado",
+    "createdAt": "2025-11-18T14:30:00.000Z",
+    "createdBy": "user-1"
+  },
+  {
+    "id": "purch-3",
+    "companyId": "1",
+    "purchaseNumber": "CMP-003",
+    "supplierId": "supp-3",
+    "supplierName": "Tostadora Artesanal Veracruz",
+    "purchaseDate": "2025-11-15T09:00:00.000Z",
+    "items": [
+      {
+        "productId": "inv-2",
+        "productName": "Café tostado artesanal",
+        "quantity": 50,
+        "unit": "kg",
+        "unitPrice": 150,
+        "total": 7500
+      }
+    ],
+    "total": 7500,
+    "paymentStatus": "Pendiente",
+    "dueDate": "2025-11-30T23:59:59.000Z",
+    "notes": "Pago a 15 días",
+    "createdAt": "2025-11-15T09:00:00.000Z",
+    "createdBy": "user-1"
+  }
+]

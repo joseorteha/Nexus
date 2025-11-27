@@ -5,75 +5,118 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { getConfirmedMatches, sendMessage } from "@/lib/actions/match-actions";
-import type { Company } from "@/types/nexus";
-import { MessageCircle, Send, Building2, Star, MapPin, Circle, Search, ArrowLeft } from "lucide-react";
+import { getConfirmedMatches } from "@/lib/actions/match-actions";
+import { getConversations, getMessages, sendMessageToChat, subscribeToMessages } from "@/lib/services/chat-service";
+import type { Company, Message, ChatConversation } from "@/types/nexus";
+import { MessageCircle, Send, Building2, Star, MapPin, Circle, Search, ArrowLeft, Loader2 } from "lucide-react";
 
 export default function ChatPage() {
   const [matches, setMatches] = useState<Company[]>([]);
+  const [conversations, setConversations] = useState<ChatConversation[]>([]);
   const [selectedMatch, setSelectedMatch] = useState<Company | null>(null);
-  const [messages, setMessages] = useState<Array<{ id: string; text: string; sender: "me" | "them"; time: string }>>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSending, setIsSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const currentUserId = "1"; // TODO: Obtener del contexto de autenticación cuando esté Supabase
 
   useEffect(() => {
     loadMatches();
+    loadConversations();
   }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Suscribirse a mensajes nuevos cuando se selecciona un match
+  useEffect(() => {
+    if (!selectedMatch) return;
+
+    const conversationId = `conv-${currentUserId}-${selectedMatch.id}`;
+    const unsubscribe = subscribeToMessages(conversationId, (newMsg) => {
+      setMessages(prev => [...prev, newMsg]);
+    });
+
+    return () => unsubscribe();
+  }, [selectedMatch]);
+
   const loadMatches = async () => {
-    const confirmedMatches = await getConfirmedMatches("1");
-    setMatches(confirmedMatches);
-    if (confirmedMatches.length > 0) {
-      setSelectedMatch(confirmedMatches[0]);
-      loadMessages(confirmedMatches[0].id);
+    try {
+      const confirmedMatches = await getConfirmedMatches(currentUserId);
+      setMatches(confirmedMatches);
+    } catch (error) {
+      console.error("Error loading matches:", error);
     }
   };
 
-  const loadMessages = (matchId: string) => {
-    // TODO: Cargar mensajes reales de la base de datos
-    // Por ahora usamos mensajes de ejemplo
-    const exampleMessages = [
-      {
-        id: "1",
-        text: "¡Hola! Vi que ofrecen servicios de logística. Necesitamos distribuir nuestro café.",
-        sender: "me" as const,
-        time: "10:30 AM"
-      },
-      {
-        id: "2",
-        text: "¡Hola! Sí, tenemos experiencia en transporte de productos agrícolas. ¿A dónde necesitan enviar?",
-        sender: "them" as const,
-        time: "10:35 AM"
-      },
-      {
-        id: "3",
-        text: "Principalmente a Orizaba y Córdoba. ¿Cuáles son sus tarifas?",
-        sender: "me" as const,
-        time: "10:40 AM"
-      }
-    ];
-    setMessages(exampleMessages);
+  const loadConversations = async () => {
+    setIsLoading(true);
+    try {
+      const convs = await getConversations(currentUserId);
+      setConversations(convs);
+    } catch (error) {
+      console.error("Error loading conversations:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const loadMessages = async (companyId: string) => {
+    try {
+      const conversationId = `conv-${currentUserId}-${companyId}`;
+      const msgs = await getMessages(conversationId);
+      setMessages(msgs);
+    } catch (error) {
+      console.error("Error loading messages:", error);
+    }
+  };
+
+  const handleSelectMatch = (match: Company) => {
+    setSelectedMatch(match);
+    loadMessages(match.id);
   };
 
   const handleSendMessage = async () => {
-    if (!newMessage.trim() || !selectedMatch) return;
+    if (!newMessage.trim() || !selectedMatch || isSending) return;
 
-    const message = {
-      id: Date.now().toString(),
-      text: newMessage,
-      sender: "me" as const,
-      time: new Date().toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" })
-    };
+    setIsSending(true);
+    try {
+      const conversationId = `conv-${currentUserId}-${selectedMatch.id}`;
+      const sentMessage = await sendMessageToChat(
+        conversationId,
+        currentUserId,
+        selectedMatch.id,
+        newMessage
+      );
 
-    setMessages(prev => [...prev, message]);
-    setNewMessage("");
+      setMessages(prev => [...prev, sentMessage]);
+      setNewMessage("");
+      
+      // Actualizar lista de conversaciones
+      loadConversations();
+    } catch (error) {
+      console.error("Error sending message:", error);
+    } finally {
+      setIsSending(false);
+    }
+  };
 
-    // Enviar mensaje al servidor
-    await sendMessage(selectedMatch.id, newMessage);
+  const formatTime = (timestamp: string) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
+
+    if (diffInHours < 24) {
+      return date.toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" });
+    } else {
+      return date.toLocaleDateString("es-MX", { day: "2-digit", month: "short" });
+    }
+  };
+
+  const getMatchForConversation = (conv: ChatConversation): Company | undefined => {
+    return matches.find(m => m.id === conv.companyId);
   };
 
   return (
@@ -99,11 +142,16 @@ export default function ChatPage() {
                 <MessageCircle className="w-5 h-5 text-primary" />
                 Conversaciones
               </CardTitle>
-              <Badge variant="default" size="sm">{matches.length}</Badge>
+              <Badge variant="default" size="sm">{conversations.length}</Badge>
             </div>
           </CardHeader>
           <CardContent className="flex-1 overflow-y-auto p-0">
-            {matches.length === 0 ? (
+            {isLoading ? (
+              <div className="p-8 text-center">
+                <Loader2 className="w-8 h-8 text-primary animate-spin mx-auto mb-2" />
+                <p className="text-sm text-gray-500">Cargando conversaciones...</p>
+              </div>
+            ) : conversations.length === 0 ? (
               <div className="p-8 text-center">
                 <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Search className="w-8 h-8 text-gray-400" />
@@ -120,47 +168,46 @@ export default function ChatPage() {
               </div>
             ) : (
               <div className="divide-y divide-gray-100">
-                {matches.map((match) => (
-                  <button
-                    key={match.id}
-                    onClick={() => {
-                      setSelectedMatch(match);
-                      loadMessages(match.id);
-                    }}
-                    className={`w-full p-4 text-left hover:bg-gray-50 transition-all duration-200 ${
-                      selectedMatch?.id === match.id ? "bg-primary/5 border-l-4 border-primary" : ""
-                    }`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="w-12 h-12 bg-linear-to-br from-primary to-secondary rounded-xl flex items-center justify-center shrink-0 shadow-sm">
-                        <Building2 className="w-6 h-6 text-white" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between mb-1">
-                          <h3 className="font-semibold text-sm truncate text-gray-900">
-                            {match.name}
-                          </h3>
-                          <Badge variant="success" size="sm" className="ml-2 flex items-center gap-1">
-                            <Star className="w-3 h-3 fill-current" />
-                            {match.rating}
-                          </Badge>
+                {conversations.map((conv) => {
+                  const match = getMatchForConversation(conv);
+                  if (!match) return null;
+                  
+                  return (
+                    <button
+                      key={conv.id}
+                      onClick={() => handleSelectMatch(match)}
+                      className={`w-full p-4 text-left hover:bg-gray-50 transition-all duration-200 ${
+                        selectedMatch?.id === match.id ? "bg-primary/5 border-l-4 border-primary" : ""
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="w-12 h-12 bg-linear-to-br from-primary to-secondary rounded-xl flex items-center justify-center shrink-0 shadow-sm">
+                          <Building2 className="w-6 h-6 text-white" />
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-gray-600 mb-1">
-                          <span className="font-medium">{match.type}</span>
-                          <span className="text-gray-400">•</span>
-                          <span className="flex items-center gap-1">
-                            <MapPin className="w-3 h-3" />
-                            {match.polo}
-                          </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between mb-1">
+                            <h3 className="font-semibold text-sm truncate text-gray-900">
+                              {match.name}
+                            </h3>
+                            <span className="text-xs text-gray-500 ml-2 shrink-0">{formatTime(conv.lastMessageTime)}</span>
+                          </div>
+                          <p className="text-xs text-gray-600 truncate mb-1">{conv.lastMessage}</p>
+                          <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1 text-xs text-gray-500">
+                              <MapPin className="w-3 h-3" />
+                              {match.polo}
+                            </div>
+                            {conv.unreadCount > 0 && (
+                              <Badge variant="default" size="sm" className="bg-primary text-white">
+                                {conv.unreadCount}
+                              </Badge>
+                            )}
+                          </div>
                         </div>
-                        <p className="text-xs text-gray-500 flex items-center gap-1">
-                          <Circle className="w-2 h-2 fill-green-500 text-green-500" />
-                          Disponible para chatear
-                        </p>
                       </div>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </CardContent>
@@ -198,22 +245,22 @@ export default function ChatPage() {
                   {messages.map((message) => (
                     <div
                       key={message.id}
-                      className={`flex ${message.sender === "me" ? "justify-end" : "justify-start"}`}
+                      className={`flex ${message.senderId === currentUserId ? "justify-end" : "justify-start"}`}
                     >
                       <div
                         className={`max-w-[70%] rounded-2xl p-4 shadow-sm ${
-                          message.sender === "me"
+                          message.senderId === currentUserId
                             ? "bg-linear-to-r from-primary to-accent text-white"
                             : "bg-white text-gray-800 border border-gray-200"
                         }`}
                       >
-                        <p className="text-sm leading-relaxed">{message.text}</p>
+                        <p className="text-sm leading-relaxed">{message.content}</p>
                         <p
                           className={`text-xs mt-2 ${
-                            message.sender === "me" ? "text-white/70" : "text-gray-500"
+                            message.senderId === currentUserId ? "text-white/70" : "text-gray-500"
                           }`}
                         >
-                          {message.time}
+                          {formatTime(message.timestamp)}
                         </p>
                       </div>
                     </div>
@@ -241,10 +288,14 @@ export default function ChatPage() {
                   <Button
                     type="submit"
                     variant="default"
-                    disabled={!newMessage.trim()}
+                    disabled={!newMessage.trim() || isSending}
                     className="rounded-xl px-6 bg-linear-to-r from-primary to-accent hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <Send className="w-5 h-5" />
+                    {isSending ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <Send className="w-5 h-5" />
+                    )}
                   </Button>
                 </form>
               </div>

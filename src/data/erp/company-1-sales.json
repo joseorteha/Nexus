@@ -1,0 +1,161 @@
+[
+  {
+    "id": "sale-1",
+    "companyId": "1",
+    "saleNumber": "VTA-001",
+    "customerId": "cust-1",
+    "customerName": "Tienda El Sol de Orizaba",
+    "saleDate": "2025-11-25T10:30:00.000Z",
+    "items": [
+      {
+        "productId": "inv-1",
+        "productName": "Café de altura orgánico",
+        "quantity": 10,
+        "unit": "kg",
+        "unitPrice": 180,
+        "total": 1800
+      },
+      {
+        "productId": "inv-5",
+        "productName": "Café molido premium",
+        "quantity": 5,
+        "unit": "kg",
+        "unitPrice": 240,
+        "total": 1200
+      }
+    ],
+    "subtotal": 3000,
+    "discount": 150,
+    "tax": 0,
+    "total": 2850,
+    "paymentMethod": "Transferencia",
+    "paymentStatus": "Pagado",
+    "notes": "Entrega programada para mañana",
+    "createdAt": "2025-11-25T10:30:00.000Z",
+    "createdBy": "user-1"
+  },
+  {
+    "id": "sale-2",
+    "companyId": "1",
+    "saleNumber": "VTA-002",
+    "customerId": "cust-2",
+    "customerName": "Restaurant Plaza Córdoba",
+    "saleDate": "2025-11-24T14:20:00.000Z",
+    "items": [
+      {
+        "productId": "inv-2",
+        "productName": "Café tostado artesanal",
+        "quantity": 15,
+        "unit": "kg",
+        "unitPrice": 220,
+        "total": 3300
+      }
+    ],
+    "subtotal": 3300,
+    "discount": 0,
+    "tax": 0,
+    "total": 3300,
+    "paymentMethod": "Crédito",
+    "paymentStatus": "Pendiente",
+    "notes": "Pago a 15 días",
+    "createdAt": "2025-11-24T14:20:00.000Z",
+    "createdBy": "user-1"
+  },
+  {
+    "id": "sale-3",
+    "companyId": "1",
+    "saleNumber": "VTA-003",
+    "customerId": "cust-3",
+    "customerName": "Café Central",
+    "saleDate": "2025-11-23T09:15:00.000Z",
+    "items": [
+      {
+        "productId": "inv-1",
+        "productName": "Café de altura orgánico",
+        "quantity": 8,
+        "unit": "kg",
+        "unitPrice": 180,
+        "total": 1440
+      },
+      {
+        "productId": "inv-3",
+        "productName": "Empaque biodegradable 1kg",
+        "quantity": 10,
+        "unit": "pz",
+        "unitPrice": 12,
+        "total": 120
+      }
+    ],
+    "subtotal": 1560,
+    "discount": 60,
+    "tax": 0,
+    "total": 1500,
+    "paymentMethod": "Efectivo",
+    "paymentStatus": "Pagado",
+    "notes": "",
+    "createdAt": "2025-11-23T09:15:00.000Z",
+    "createdBy": "user-1"
+  },
+  {
+    "id": "sale-4",
+    "companyId": "1",
+    "saleNumber": "VTA-004",
+    "customerId": "cust-5",
+    "customerName": "Hotel Montaña Vista",
+    "saleDate": "2025-11-22T16:45:00.000Z",
+    "items": [
+      {
+        "productId": "inv-1",
+        "productName": "Café de altura orgánico",
+        "quantity": 25,
+        "unit": "kg",
+        "unitPrice": 180,
+        "total": 4500
+      },
+      {
+        "productId": "inv-2",
+        "productName": "Café tostado artesanal",
+        "quantity": 20,
+        "unit": "kg",
+        "unitPrice": 220,
+        "total": 4400
+      }
+    ],
+    "subtotal": 8900,
+    "discount": 400,
+    "tax": 0,
+    "total": 8500,
+    "paymentMethod": "Crédito",
+    "paymentStatus": "Pendiente",
+    "notes": "Cliente premium, pago semanal",
+    "createdAt": "2025-11-22T16:45:00.000Z",
+    "createdBy": "user-1"
+  },
+  {
+    "id": "sale-5",
+    "companyId": "1",
+    "saleNumber": "VTA-005",
+    "customerId": "cust-4",
+    "customerName": "María González",
+    "saleDate": "2025-11-21T11:00:00.000Z",
+    "items": [
+      {
+        "productId": "inv-5",
+        "productName": "Café molido premium",
+        "quantity": 3,
+        "unit": "kg",
+        "unitPrice": 240,
+        "total": 720
+      }
+    ],
+    "subtotal": 720,
+    "discount": 0,
+    "tax": 0,
+    "total": 720,
+    "paymentMethod": "Efectivo",
+    "paymentStatus": "Pagado",
+    "notes": "Cliente frecuente",
+    "createdAt": "2025-11-21T11:00:00.000Z",
+    "createdBy": "user-1"
+  }
+]
