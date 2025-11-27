@@ -9,7 +9,7 @@ import AddCompanyModal from "@/components/modules/catalogo/AddCompanyModal";
 interface Company {
   id: string;
   name: string;
-  
+
   description: string;
   category: string;
   rating: number;
@@ -26,7 +26,6 @@ const CatalogPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Estados de filtro
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [minRating, setMinRating] = useState(0);
