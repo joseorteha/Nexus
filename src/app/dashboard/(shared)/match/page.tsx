@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/app/lib/supabase/client";
-import { Heart, X, Sparkles, Users, MapPin, Package, RefreshCw, CheckCircle, ArrowLeft } from "lucide-react";
+import { Heart, X, Sparkles, Users, MapPin, Package, RefreshCw, CheckCircle, ArrowLeft, MessageCircle } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import Link from "next/link";
 
@@ -19,6 +19,15 @@ interface Cooperativa {
   buscando_miembros: boolean;
   creada_por: string;
   fecha_creacion: string;
+  matchScore?: number; // Score de compatibilidad
+}
+
+interface PerfilUsuario {
+  productos: string[];
+  categorias: string[];
+  region: string;
+  capacidad_produccion: string;
+  objetivo: string;
 }
 
 export default function MatchPage() {
@@ -27,6 +36,7 @@ export default function MatchPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [showJoinModal, setShowJoinModal] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const [perfilUsuario, setPerfilUsuario] = useState<PerfilUsuario | null>(null);
 
   useEffect(() => {
     loadCooperativas();
@@ -40,18 +50,39 @@ export default function MatchPage() {
       
       setUserId(user.id);
 
-      // Obtener cooperativas activas que buscan miembros
+      // 1. Obtener el perfil del usuario (onboarding_normal)
+      const { data: perfilData } = await supabase
+        .from("onboarding_normal")
+        .select("productos, categorias, region, capacidad_produccion, objetivo")
+        .eq("user_id", user.id)
+        .single();
+
+      if (perfilData) {
+        setPerfilUsuario(perfilData);
+      }
+
+      // 2. Obtener cooperativas activas que buscan miembros
       const { data, error } = await supabase
         .from("cooperativas")
         .select("*")
         .eq("estado", "active")
         .eq("buscando_miembros", true)
-        .neq("creada_por", user.id) // No mostrar las propias
-        .order("fecha_creacion", { ascending: false });
+        .neq("creada_por", user.id); // No mostrar las propias
 
       if (error) throw error;
 
-      setCooperativas(data || []);
+      // 3. Calcular score de compatibilidad y ordenar
+      const cooperativasConScore = (data || []).map(coop => ({
+        ...coop,
+        matchScore: calcularMatchScore(coop, perfilData)
+      })).sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0));
+
+      console.log("🎯 Cooperativas ordenadas por compatibilidad:", cooperativasConScore.map(c => ({
+        nombre: c.nombre,
+        score: c.matchScore
+      })));
+
+      setCooperativas(cooperativasConScore);
     } catch (error) {
       console.error("Error cargando cooperativas:", error);
     } finally {
@@ -59,27 +90,93 @@ export default function MatchPage() {
     }
   }
 
+  /**
+   * Calcula un score de compatibilidad entre el usuario y una cooperativa
+   * basado en productos, categorías y región
+   */
+  function calcularMatchScore(cooperativa: Cooperativa, perfil: PerfilUsuario | null): number {
+    if (!perfil) return 0;
+
+    let score = 0;
+
+    // 1. Compatibilidad de PRODUCTOS (40 puntos)
+    const productosUsuario = perfil.productos.map(p => p.toLowerCase());
+    const productosCooperativa = (cooperativa.productos_ofrecidos || []).map(p => p.toLowerCase());
+    
+    const productosComunes = productosUsuario.filter(p => 
+      productosCooperativa.some(pc => 
+        pc.includes(p) || p.includes(pc)
+      )
+    );
+    
+    if (productosComunes.length > 0) {
+      score += 40 * (productosComunes.length / Math.max(productosUsuario.length, 1));
+    }
+
+    // 2. Compatibilidad de CATEGORÍAS (35 puntos)
+    const categoriasUsuario = perfil.categorias.map(c => c.toLowerCase());
+    const categoriasCooperativa = (cooperativa.categoria || []).map(c => c.toLowerCase());
+    
+    const categoriasComunes = categoriasUsuario.filter(c => categoriasCooperativa.includes(c));
+    
+    if (categoriasComunes.length > 0) {
+      score += 35 * (categoriasComunes.length / Math.max(categoriasUsuario.length, 1));
+    }
+
+    // 3. Compatibilidad de REGIÓN (25 puntos)
+    if (perfil.region && cooperativa.region) {
+      if (perfil.region.toLowerCase() === cooperativa.region.toLowerCase()) {
+        score += 25; // Misma región exacta
+      } else if (
+        perfil.region.toLowerCase().includes(cooperativa.region.toLowerCase()) ||
+        cooperativa.region.toLowerCase().includes(perfil.region.toLowerCase())
+      ) {
+        score += 15; // Región similar
+      }
+    }
+
+    return Math.round(score);
+  }
+
   async function handleJoin(cooperativaId: string) {
     if (!userId) return;
 
     try {
-      // Agregar al usuario como miembro
+      // Obtener info del usuario y cooperativa
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("No hay usuario autenticado");
+
+      const { data: userData } = await supabase
+        .from("usuarios")
+        .select("nombre, apellidos")
+        .eq("id", userId)
+        .single();
+
+      if (!userData) throw new Error("Usuario no encontrado");
+
+      const cooperativa = cooperativas[currentIndex];
+
+      // Crear SOLICITUD de membresía en lugar de unirse directamente
       const { error } = await supabase
-        .from("cooperativa_miembros")
+        .from("solicitudes_cooperativas")
         .insert({
-          cooperativa_id: cooperativaId,
+          tipo: "unirse",
           user_id: userId,
-          rol: "miembro"
+          nombre_usuario: `${userData.nombre} ${userData.apellidos}`,
+          email_usuario: user.email,
+          cooperativa_id: cooperativaId,
+          nombre_cooperativa: cooperativa.nombre,
+          datos_cooperativa: perfilUsuario ? {
+            productos: perfilUsuario.productos,
+            categorias: perfilUsuario.categorias,
+            region: perfilUsuario.region,
+            capacidad_produccion: perfilUsuario.capacidad_produccion,
+            match_score: cooperativa.matchScore
+          } : null,
+          estado: "pendiente"
         });
 
       if (error) throw error;
-
-      // Actualizar contador de miembros
-      const cooperativa = cooperativas[currentIndex];
-      await supabase
-        .from("cooperativas")
-        .update({ total_miembros: cooperativa.total_miembros + 1 })
-        .eq("id", cooperativaId);
 
       setShowJoinModal(true);
       setTimeout(() => {
@@ -87,8 +184,8 @@ export default function MatchPage() {
         nextCard();
       }, 2000);
     } catch (error: any) {
-      console.error("Error al unirse:", error);
-      alert("Error al unirse a la cooperativa: " + error.message);
+      console.error("Error al solicitar membresía:", error);
+      alert("Error al enviar solicitud: " + error.message);
     }
   }
 
@@ -200,8 +297,20 @@ export default function MatchPage() {
       {/* Cooperativa Card */}
       <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200 mb-6">
         {/* Header con gradiente */}
-        <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-8 text-white">
-          <h2 className="text-3xl font-bold mb-2">{currentCooperativa.nombre}</h2>
+        <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-8 text-white relative">
+          {/* Match Score Badge */}
+          {currentCooperativa.matchScore !== undefined && currentCooperativa.matchScore > 0 && (
+            <div className="absolute top-4 right-4">
+              <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-yellow-300" />
+                <div>
+                  <p className="text-xs text-blue-100">Compatibilidad</p>
+                  <p className="text-xl font-bold text-white">{currentCooperativa.matchScore}%</p>
+                </div>
+              </div>
+            </div>
+          )}
+          <h2 className="text-3xl font-bold mb-2 pr-32">{currentCooperativa.nombre}</h2>
           <p className="text-blue-100">{currentCooperativa.descripcion}</p>
         </div>
 
@@ -226,6 +335,49 @@ export default function MatchPage() {
             </div>
           </div>
 
+          {/* Match Highlights - Mostrar productos/categorías en común */}
+          {perfilUsuario && currentCooperativa.matchScore && currentCooperativa.matchScore > 0 && (
+            <div className="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border-2 border-green-200">
+              <div className="flex items-center gap-2 mb-3">
+                <Sparkles className="w-5 h-5 text-green-600" />
+                <p className="font-semibold text-green-900">¿Por qué esta cooperativa es compatible contigo?</p>
+              </div>
+              <div className="space-y-2 text-sm">
+                {(() => {
+                  const productosComunes = perfilUsuario.productos.filter(p => 
+                    currentCooperativa.productos_ofrecidos?.some(pc => 
+                      pc.toLowerCase().includes(p.toLowerCase()) || p.toLowerCase().includes(pc.toLowerCase())
+                    )
+                  );
+                  const categoriasComunes = perfilUsuario.categorias.filter(c => 
+                    currentCooperativa.categoria?.some(cc => cc.toLowerCase() === c.toLowerCase())
+                  );
+                  
+                  return (
+                    <>
+                      {productosComunes.length > 0 && (
+                        <p className="text-green-800">
+                          ✓ <strong>Productos en común:</strong> {productosComunes.join(", ")}
+                        </p>
+                      )}
+                      {categoriasComunes.length > 0 && (
+                        <p className="text-green-800">
+                          ✓ <strong>Categorías en común:</strong> {categoriasComunes.join(", ")}
+                        </p>
+                      )}
+                      {perfilUsuario.region && currentCooperativa.region && 
+                       perfilUsuario.region.toLowerCase() === currentCooperativa.region.toLowerCase() && (
+                        <p className="text-green-800">
+                          ✓ <strong>Misma región:</strong> {currentCooperativa.region}
+                        </p>
+                      )}
+                    </>
+                  );
+                })()}
+              </div>
+            </div>
+          )}
+
           {/* Categorías */}
           <div className="mb-6">
             <p className="text-sm font-semibold text-gray-700 mb-3">Categorías</p>
@@ -244,7 +396,7 @@ export default function MatchPage() {
               <p className="text-sm font-semibold text-gray-700 mb-3">Productos que ofrecen</p>
               <div className="flex flex-wrap gap-2">
                 {currentCooperativa.productos_ofrecidos.map((prod, index) => (
-                  <Badge key={index} variant="outline">
+                  <Badge key={index} variant="default" className="bg-gray-100 text-gray-700">
                     {prod}
                   </Badge>
                 ))}
@@ -270,20 +422,27 @@ export default function MatchPage() {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-4 p-8 pt-0">
+        <div className="grid grid-cols-3 gap-4 p-8 pt-0">
           <button
             onClick={handlePass}
-            className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2"
+            className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-4 px-4 rounded-xl transition-all flex items-center justify-center gap-2"
           >
             <X className="w-5 h-5" />
-            Pasar
+            <span className="hidden sm:inline">Pasar</span>
           </button>
+          <Link
+            href={`/dashboard/match/chat?cooperativa=${currentCooperativa.id}`}
+            className="bg-purple-100 hover:bg-purple-200 text-purple-700 font-semibold py-4 px-4 rounded-xl transition-all flex items-center justify-center gap-2"
+          >
+            <MessageCircle className="w-5 h-5" />
+            <span className="hidden sm:inline">Chat</span>
+          </Link>
           <button
             onClick={() => handleJoin(currentCooperativa.id)}
-            className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:shadow-xl text-white font-semibold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2"
+            className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:shadow-xl text-white font-semibold py-4 px-4 rounded-xl transition-all flex items-center justify-center gap-2"
           >
             <CheckCircle className="w-5 h-5" />
-            Unirme
+            <span className="hidden sm:inline">Unirme</span>
           </button>
         </div>
       </div>
@@ -292,19 +451,22 @@ export default function MatchPage() {
       {showJoinModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 animate-in fade-in duration-300">
           <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-10 max-w-md mx-4 text-center shadow-2xl border border-gray-200 animate-in zoom-in duration-500">
-            <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
               <CheckCircle className="w-10 h-10 text-white" />
             </div>
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-3">
-              ¡Te has unido!
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-3">
+              ¡Solicitud Enviada!
             </h2>
-            <p className="text-gray-600 text-lg mb-6">
-              Ahora eres parte de la cooperativa
+            <p className="text-gray-600 text-lg mb-2">
+              Tu solicitud ha sido enviada a la cooperativa
+            </p>
+            <p className="text-gray-500 text-sm mb-6">
+              Recibirás una notificación cuando sea revisada
             </p>
             <div className="flex gap-2 justify-center">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce"></div>
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-              <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+              <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+              <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+              <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
             </div>
           </div>
         </div>
