@@ -131,9 +131,10 @@ export default function OnboardingPage() {
         
         // Guardar en tabla onboarding_normal (columnas en español)
         // Campos opcionales pueden ser null si el usuario los omitió
+        // Usar upsert para permitir actualización si ya existe
         const { error: onboardingError } = await supabase
           .from("onboarding_normal")
-          .insert({
+          .upsert({
             user_id: user.id,
             productos: normalData.products,
             categorias: normalData.categories,
@@ -143,6 +144,8 @@ export default function OnboardingPage() {
               (normalData.goal === "create_cooperative" ? "crear_cooperativa" :
                normalData.goal === "join_cooperative" ? "unirse_cooperativa" : 
                "vender_individual") : null // OPCIONAL
+          }, {
+            onConflict: 'user_id' // Actualizar si user_id ya existe
           });
 
         if (onboardingError) {
@@ -218,9 +221,10 @@ export default function OnboardingPage() {
         
         // Guardar en tabla onboarding_empresa (columnas en español)
         // Campos opcionales pueden ser null si el usuario los omitió
+        // Usar upsert para permitir actualización si ya existe
         const { error: onboardingError } = await supabase
           .from("onboarding_empresa")
-          .insert({
+          .upsert({
             user_id: user.id,
             nombre_empresa: empresaData.companyName,
             rfc: empresaData.rfc,
@@ -231,6 +235,8 @@ export default function OnboardingPage() {
             presupuesto: empresaData.budget || null, // OPCIONAL
             requisitos: empresaData.requirements || null, // OPCIONAL
             region: empresaData.region || null // OPCIONAL
+          }, {
+            onConflict: 'user_id' // Actualizar si user_id ya existe
           });
 
         if (onboardingError) {
