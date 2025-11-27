@@ -34,21 +34,8 @@ export default function CTASection() {
         </p>
 
         <a
-          href="/register"
-          className="
-            inline-block
-            bg-white 
-            text-blue-600 
-            font-extrabold 
-            px-12 py-5 
-            rounded-xl 
-            text-xl 
-            shadow-[0_10px_30px_rgba(0,0,0,0.3)] 
-            transition duration-300 
-            transform hover:scale-[1.05] 
-            hover:bg-gray-100 
-            hover:shadow-[0_15px_40px_rgba(0,0,0,0.5)]
-          "
+          href="/auth/login"
+          className="inline-block bg-white text-blue-600 font-extrabold px-12 py-5 rounded-xl text-xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition duration-300 transform hover:scale-[1.05]hover:bg-gray-100 hover:shadow-[0_15px_40px_rgba(0,0,0,0.5)]"
         >
           ¡Crea tu Cuenta Gratuita Ahora!
         </a>
