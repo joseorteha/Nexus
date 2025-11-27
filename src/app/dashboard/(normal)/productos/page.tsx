@@ -1,27 +1,29 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/app/lib/supabase/client";
-import { Package, Plus, Edit, Trash2, Search } from "lucide-react";
+import { Package, Plus, Edit, Trash2, Search, AlertTriangle, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-
-interface Producto {
-  id: string;
-  nombre: string;
-  descripcion: string;
-  precio: number;
-  stock: number;
-  unidad: string;
-  categoria: string;
-  imagen_url?: string;
-}
+import { 
+  obtenerProductos, 
+  obtenerProductosStockBajo,
+  obtenerEstadisticas,
+  eliminarProducto,
+  formatearPrecio,
+  type Producto,
+  type EstadisticasProductos
+} from "@/lib/productos";
 
 export default function MisProductosPage() {
+  const router = useRouter();
   const [productos, setProductos] = useState<Producto[]>([]);
+  const [productosStockBajo, setProductosStockBajo] = useState<Producto[]>([]);
+  const [estadisticas, setEstadisticas] = useState<EstadisticasProductos | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [showAddModal, setShowAddModal] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
     loadProductos();
@@ -32,14 +34,35 @@ export default function MisProductosPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // TODO: Implementar carga de productos del usuario
-      // const { data } = await supabase.from("productos").select("*").eq("user_id", user.id);
-      
-      setProductos([]);
+      setUserId(user.id);
+
+      // Cargar productos
+      const productos = await obtenerProductos(user.id, "individual");
+      setProductos(productos);
+
+      // Cargar productos con stock bajo
+      const stockBajo = await obtenerProductosStockBajo(user.id, "individual");
+      setProductosStockBajo(stockBajo);
+
+      // Cargar estadísticas
+      const stats = await obtenerEstadisticas(user.id, "individual");
+      setEstadisticas(stats);
     } catch (error) {
       console.error("Error cargando productos:", error);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleEliminar(id: string) {
+    if (!confirm("¿Estás seguro de eliminar este producto?")) return;
+    
+    try {
+      await eliminarProducto(id);
+      await loadProductos();
+    } catch (error) {
+      console.error("Error eliminando producto:", error);
+      alert("Error al eliminar el producto");
     }
   }
 
@@ -72,6 +95,55 @@ export default function MisProductosPage() {
         </p>
       </div>
 
+      {/* Estadísticas */}
+      {estadisticas && productos.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white p-4 rounded-xl shadow">
+            <p className="text-sm text-gray-600 mb-1">Total Productos</p>
+            <p className="text-2xl font-bold text-gray-900">{estadisticas.total_productos}</p>
+          </div>
+          <div className="bg-white p-4 rounded-xl shadow">
+            <p className="text-sm text-gray-600 mb-1">Valor Inventario</p>
+            <p className="text-2xl font-bold text-green-600">
+              {formatearPrecio(estadisticas.valor_total_inventario)}
+            </p>
+          </div>
+          <div className="bg-white p-4 rounded-xl shadow">
+            <p className="text-sm text-gray-600 mb-1">Stock Bajo</p>
+            <p className="text-2xl font-bold text-orange-600">{estadisticas.productos_stock_bajo}</p>
+          </div>
+          <div className="bg-white p-4 rounded-xl shadow">
+            <p className="text-sm text-gray-600 mb-1">Agotados</p>
+            <p className="text-2xl font-bold text-red-600">{estadisticas.productos_agotados}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Alertas de stock bajo */}
+      {productosStockBajo.length > 0 && (
+        <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-6">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <h3 className="font-semibold text-orange-900 mb-1">Productos con stock bajo</h3>
+              <p className="text-sm text-orange-800 mb-2">
+                Tienes {productosStockBajo.length} producto(s) con stock por debajo del mínimo
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {productosStockBajo.slice(0, 3).map((p) => (
+                  <span key={p.id} className="text-xs bg-white px-2 py-1 rounded-full text-orange-900">
+                    {p.nombre}: {p.stock_actual} {p.unidad_medida}
+                  </span>
+                ))}
+                {productosStockBajo.length > 3 && (
+                  <span className="text-xs text-orange-700">+{productosStockBajo.length - 3} más</span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Barra de búsqueda y botón agregar */}
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <div className="flex-1 relative">
@@ -85,7 +157,7 @@ export default function MisProductosPage() {
           />
         </div>
         <Button
-          onClick={() => setShowAddModal(true)}
+          onClick={() => router.push("/dashboard/productos/nuevo")}
           className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 flex items-center gap-2"
         >
           <Plus className="w-5 h-5" />
@@ -106,7 +178,7 @@ export default function MisProductosPage() {
             Comienza agregando los productos que ofreces para que las empresas puedan encontrarte
           </p>
           <Button
-            onClick={() => setShowAddModal(true)}
+            onClick={() => router.push("/dashboard/productos/nuevo")}
             className="bg-gradient-to-r from-primary to-secondary"
           >
             <Plus className="w-5 h-5 mr-2" />
@@ -140,18 +212,29 @@ export default function MisProductosPage() {
                   {producto.descripcion}
                 </p>
                 
+                <div className="mb-3">
+                  <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-full">
+                    {producto.categoria}
+                  </span>
+                </div>
+
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <p className="text-xs text-gray-500">Precio</p>
                     <p className="text-xl font-bold text-primary">
-                      ${producto.precio}
+                      {formatearPrecio(producto.precio)}
                     </p>
                   </div>
                   <div>
                     <p className="text-xs text-gray-500">Stock</p>
-                    <p className="text-lg font-semibold text-gray-900">
-                      {producto.stock} {producto.unidad}
+                    <p className={`text-lg font-semibold ${
+                      producto.stock_actual <= producto.stock_minimo ? "text-orange-600" : "text-gray-900"
+                    }`}>
+                      {producto.stock_actual} {producto.unidad_medida}
                     </p>
+                    {producto.stock_actual <= producto.stock_minimo && (
+                      <p className="text-xs text-orange-600">¡Stock bajo!</p>
+                    )}
                   </div>
                 </div>
 
@@ -159,6 +242,7 @@ export default function MisProductosPage() {
                   <Button
                     variant="outline"
                     size="sm"
+                    onClick={() => router.push(`/dashboard/productos/${producto.id}`)}
                     className="flex-1 flex items-center justify-center gap-2"
                   >
                     <Edit className="w-4 h-4" />
@@ -167,6 +251,7 @@ export default function MisProductosPage() {
                   <Button
                     variant="outline"
                     size="sm"
+                    onClick={() => handleEliminar(producto.id)}
                     className="text-red-600 hover:text-red-700 hover:border-red-600"
                   >
                     <Trash2 className="w-4 h-4" />

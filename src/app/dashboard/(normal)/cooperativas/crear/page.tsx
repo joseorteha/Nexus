@@ -68,42 +68,44 @@ export default function CrearCooperativaPage() {
 
       const { data: userData } = await supabase
         .from("usuarios")
-        .select("nombre, apellidos")
+        .select("nombre, apellidos, tipo_usuario")
         .eq("id", user.id)
         .single();
 
-      // Crear cooperativa directamente (convocatoria activa)
-      const { data: cooperativa, error } = await supabase
-        .from("cooperativas")
+      if (!userData) throw new Error("Usuario no encontrado");
+
+      // Verificar que sea usuario normal
+      if (userData.tipo_usuario !== "normal") {
+        alert("Solo usuarios normales pueden crear cooperativas");
+        setLoading(false);
+        return;
+      }
+
+      // CREAR SOLICITUD en lugar de cooperativa directa
+      const { error } = await supabase
+        .from("solicitudes_cooperativas")
         .insert({
-          nombre: formData.nombre,
-          descripcion: formData.descripcion,
-          creada_por: user.id,
-          categoria: formData.categorias,
-          region: formData.region,
-          capacidad_produccion: formData.capacidadProduccion,
-          productos_ofrecidos: formData.productos,
-          buscando_miembros: true,
-          miembros_objetivo: 10,
-          total_miembros: 1,
-          estado: "active"
-        })
-        .select()
-        .single();
+          tipo: "crear",
+          user_id: user.id,
+          nombre_usuario: `${userData.nombre} ${userData.apellidos}`,
+          email_usuario: user.email,
+          nombre_cooperativa: formData.nombre,
+          datos_cooperativa: {
+            nombre: formData.nombre,
+            descripcion: formData.descripcion,
+            categorias: formData.categorias,
+            region: formData.region,
+            capacidad_produccion: formData.capacidadProduccion,
+            productos_ofrecidos: formData.productos,
+            certificaciones: formData.certificaciones,
+          },
+          estado: "pendiente"
+        });
 
       if (error) throw error;
 
-      // Agregar al creador como primer miembro
-      await supabase
-        .from("cooperativa_miembros")
-        .insert({
-          cooperativa_id: cooperativa.id,
-          user_id: user.id,
-          rol: "fundador"
-        });
-
-      alert("¡Cooperativa creada! Ahora aparecerá en Match para que otros usuarios se unan.");
-      router.push("/dashboard/match");
+      alert("✅ ¡Solicitud enviada con éxito!\n\nNuestro equipo revisará tu solicitud y se pondrá en contacto contigo pronto para guiarte en el proceso de creación de tu cooperativa.\n\nRecibirás una notificación cuando tu solicitud sea aprobada.");
+      router.push("/dashboard");
     } catch (error: any) {
       console.error("Error:", error);
       alert("Error al crear cooperativa: " + error.message);
@@ -146,7 +148,7 @@ export default function CrearCooperativaPage() {
               type="text"
               placeholder="Ej: Cooperativa Café de la Sierra"
               value={formData.nombre}
-              onChange={(e) => setFormData(prev => ({ ...prev, nombre: e.target.value }))}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({ ...prev, nombre: e.target.value }))}
               required
             />
           </div>
@@ -253,7 +255,7 @@ export default function CrearCooperativaPage() {
               type="text"
               placeholder="Ej: 500 kg al mes"
               value={formData.capacidadProduccion}
-              onChange={(e) => setFormData(prev => ({ ...prev, capacidadProduccion: e.target.value }))}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({ ...prev, capacidadProduccion: e.target.value }))}
             />
           </div>
 

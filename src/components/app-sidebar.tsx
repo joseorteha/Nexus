@@ -18,6 +18,8 @@ import { supabase } from "@/app/lib/supabase/client";
 
 export function AppSidebar() {
   const [tipoUsuario, setTipoUsuario] = useState<string>("normal");
+  const [perteneceCooperativa, setPerteneceCooperativa] = useState(false);
+  const [cooperativaNombre, setCooperativaNombre] = useState<string>("");
   
   useEffect(() => {
     loadUserType();
@@ -35,6 +37,25 @@ export function AppSidebar() {
         .single();
 
       setTipoUsuario(userData?.tipo_usuario || "normal");
+
+      // Si es usuario normal, verificar si pertenece a una cooperativa
+      if (userData?.tipo_usuario === "normal") {
+        const { data: miembro } = await supabase
+          .from("cooperativa_miembros")
+          .select(`
+            rol,
+            cooperativas (
+              nombre
+            )
+          `)
+          .eq("user_id", user.id)
+          .single();
+
+        if (miembro) {
+          setPerteneceCooperativa(true);
+          setCooperativaNombre((miembro.cooperativas as any)?.nombre || "");
+        }
+      }
     } catch (error) {
       console.error("Error cargando tipo de usuario:", error);
     }
@@ -163,6 +184,11 @@ export function AppSidebar() {
       icon: Users,
     },
     {
+      title: "Solicitudes",
+      url: "/dashboard/solicitudes-cooperativas",
+      icon: Store,
+    },
+    {
       title: "Polos Económicos",
       url: "/dashboard/polos-economicos",
       icon: Map,
@@ -227,16 +253,31 @@ export function AppSidebar() {
             <SidebarGroupLabel>Cooperativas</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {menuCooperativas.map((item) => (
-                  <SidebarMenuItem key={item.title}>
+                {perteneceCooperativa ? (
+                  // Si ya pertenece a una cooperativa
+                  <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                      <a href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
+                      <a href="/dashboard/mi-cooperativa">
+                        <Store />
+                        <span>Mi Cooperativa</span>
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                ))}
+                ) : (
+                  // Si no pertenece, mostrar opciones de crear/unirse
+                  <>
+                    {menuCooperativas.map((item) => (
+                      <SidebarMenuItem key={item.title}>
+                        <SidebarMenuButton asChild>
+                          <a href={item.url}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </a>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
+                  </>
+                )}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

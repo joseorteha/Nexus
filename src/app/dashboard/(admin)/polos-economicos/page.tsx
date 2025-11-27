@@ -2,6 +2,7 @@
 
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { Map, MapPin, TrendingUp, Users, Package } from "lucide-react";
+import { MapaPolosEconomicos } from "@/components/modules/admin/MapaPolosEconomicos";
 
 export default function PolosEconomicosPage() {
   return (
@@ -53,25 +54,14 @@ export default function PolosEconomicosPage() {
           </div>
         </div>
 
-        {/* Contenedor del Mapa */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+        {/* Mapa Interactivo 3D */}
+        <div className="mb-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <Map className="w-5 h-5" />
-            Mapa Interactivo de Polos Económicos
+            Mapa Interactivo 3D de Polos Económicos
           </h2>
           
-          {/* Placeholder para el mapa de dev */}
-          <div className="w-full h-[600px] bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg border-2 border-dashed border-blue-300 flex items-center justify-center">
-            <div className="text-center">
-              <Map className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-              <p className="text-lg font-semibold text-gray-700 mb-2">
-                Mapa Interactivo se integrará aquí
-              </p>
-              <p className="text-sm text-gray-500">
-                Componente de mapa desde rama dev
-              </p>
-            </div>
-          </div>
+          <MapaPolosEconomicos height="600px" showLegend={true} />
         </div>
 
         {/* Lista de Polos Económicos */}

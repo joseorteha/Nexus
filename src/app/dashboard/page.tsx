@@ -1,12 +1,23 @@
-// 🏠 DASHBOARD HOME - Adaptado según tipo de usuario
-// URL: /dashboard
 
 "use client";
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/app/lib/supabase/client";
-import { Package, ShoppingBag, Users, TrendingUp, Heart, Store, ArrowRight, Award } from "lucide-react";
+import { 
+  Package, 
+  ShoppingBag, 
+  Users, 
+  TrendingUp, 
+  Heart, 
+  Store, 
+  ArrowRight, 
+  Award,
+  Sparkles,
+  Target,
+  Zap
+} from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function DashboardPage() {
   const [tipoUsuario, setTipoUsuario] = useState<string | null>(null);
@@ -37,7 +48,6 @@ export default function DashboardPage() {
       setTipoUsuario(userData?.tipo_usuario || "normal");
       setUserName(`${userData?.nombre || ""} ${userData?.apellidos || ""}`.trim() || "Usuario");
 
-      // Cargar estadísticas si es usuario normal
       if (userData?.tipo_usuario === "normal") {
         await loadStats(user.id);
       }
@@ -50,13 +60,12 @@ export default function DashboardPage() {
 
   async function loadStats(userId: string) {
     try {
-      // Contar productos del usuario
       const { count: productosCount } = await supabase
         .from("productos")
         .select("*", { count: 'exact', head: true })
-        .eq("user_id", userId);
+        .eq("propietario_id", userId)
+        .eq("tipo_propietario", "individual");
 
-      // Verificar si es miembro de alguna cooperativa
       const { data: cooperativaData } = await supabase
         .from("cooperativa_miembros")
         .select(`
@@ -70,7 +79,7 @@ export default function DashboardPage() {
 
       setStats({
         productos: productosCount || 0,
-        ventas: 0, // TODO: Implementar cuando haya tabla de ventas
+        ventas: 0,
         cooperativa: (cooperativaData?.cooperativas as any)?.nombre || null,
         rolCooperativa: cooperativaData?.rol || null
       });
@@ -81,220 +90,290 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
-
-  // Dashboard para Usuario Normal
-  if (tipoUsuario === "normal") {
-    return (
-      <div>
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
-            ¡Bienvenido, {userName}! 👋
-          </h1>
-          <p className="text-gray-600 text-lg">
-            {stats.cooperativa 
-              ? `Miembro de ${stats.cooperativa} · ${stats.rolCooperativa}` 
-              : "Gestiona tus productos y encuentra oportunidades de negocio"
-            }
-          </p>
-        </div>
-
-        {/* Tarjetas de Acciones Rápidas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {/* Mis Productos */}
-          <Link href="/dashboard/productos" className="group">
-            <div className="bg-white p-6 rounded-xl shadow-lg border-2 border-transparent hover:border-primary transition-all hover:shadow-xl">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center">
-                  <Package className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900">Mis Productos</h3>
-              </div>
-              <p className="text-gray-600 mb-4">
-                Administra tu inventario y agrega nuevos productos
-              </p>
-              <div className="flex items-center text-primary font-medium group-hover:gap-2 transition-all">
-                Gestionar
-                <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          </Link>
-
-          {/* Marketplace */}
-          <Link href="/dashboard/marketplace" className="group">
-            <div className="bg-white p-6 rounded-xl shadow-lg border-2 border-transparent hover:border-green-500 transition-all hover:shadow-xl">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
-                  <ShoppingBag className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900">Marketplace</h3>
-              </div>
-              <p className="text-gray-600 mb-4">
-                Vende tus productos y explora el mercado
-              </p>
-              <div className="flex items-center text-green-600 font-medium group-hover:gap-2 transition-all">
-                Explorar
-                <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          </Link>
-
-          {/* Match con Cooperativas */}
-          <Link href="/dashboard/match" className="group">
-            <div className="bg-white p-6 rounded-xl shadow-lg border-2 border-transparent hover:border-pink-500 transition-all hover:shadow-xl">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center">
-                  <Heart className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900">Match</h3>
-              </div>
-              <p className="text-gray-600 mb-4">
-                Descubre cooperativas buscando miembros en tu región
-              </p>
-              <div className="flex items-center text-pink-600 font-medium group-hover:gap-2 transition-all">
-                Ver convocatorias
-                <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          </Link>
-        </div>
-
-        {/* Sección de Cooperativas */}
-        {!stats.cooperativa && (
-          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-8 border border-blue-200">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shrink-0">
-                <Users className="w-7 h-7 text-white" />
-              </div>
-              <div className="flex-1">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  🚀 Potencia tu negocio en equipo
-                </h2>
-                <p className="text-gray-700 mb-4">
-                  Las cooperativas en Nexus te permiten <strong>unir fuerzas con otros productores</strong> de tu región para:
-                  <br />✓ Acceder a mejores precios y contratos con empresas grandes
-                  <br />✓ Compartir recursos y reducir costos de producción
-                  <br />✓ Aumentar tu volumen de venta y visibilidad en el mercado
-                </p>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <Link href="/dashboard/cooperativas/crear">
-                <div className="bg-white p-6 rounded-lg hover:shadow-lg transition-all cursor-pointer border-2 border-transparent hover:border-blue-500">
-                  <Store className="w-8 h-8 text-blue-600 mb-3" />
-                  <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                    🏢 Crear Cooperativa
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Lanza una convocatoria y reúne miembros para tu cooperativa
-                  </p>
-                </div>
-              </Link>
-
-              <Link href="/dashboard/match">
-                <div className="bg-white p-6 rounded-lg hover:shadow-lg transition-all cursor-pointer border-2 border-transparent hover:border-cyan-500">
-                  <Heart className="w-8 h-8 text-pink-600 mb-3" />
-                  <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                    💼 Unirse a Cooperativa
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Explora convocatorias activas en el Match y solicita unirte
-                  </p>
-                </div>
-              </Link>
-            </div>
-          </div>
-        )}
-
-        {/* Si ya es miembro de cooperativa */}
-        {stats.cooperativa && (
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-8 border border-green-200">
-            <div className="flex items-start gap-4">
-              <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shrink-0">
-                <Award className="w-7 h-7 text-white" />
-              </div>
-              <div className="flex-1">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  ¡Eres parte de {stats.cooperativa}! 🎉
-                </h2>
-                <p className="text-gray-700 mb-4">
-                  Como <strong>{stats.rolCooperativa}</strong>, ahora tienes acceso a herramientas avanzadas para gestionar la cooperativa.
-                </p>
-                <Link href="/dashboard/erp">
-                  <div className="inline-flex items-center gap-2 bg-white px-6 py-3 rounded-lg hover:shadow-lg transition-all cursor-pointer border-2 border-transparent hover:border-green-500">
-                    <Package className="w-5 h-5 text-green-600" />
-                    <span className="font-semibold text-gray-900">Ir al ERP Cooperativo</span>
-                    <ArrowRight className="w-4 h-4 text-green-600" />
-                  </div>
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Estadísticas Rápidas */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-          <div className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
-            <div className="flex items-center gap-3 mb-2">
-              <Package className="w-5 h-5 text-primary" />
-              <span className="text-sm text-gray-600">Mis Productos</span>
-            </div>
-            <p className="text-2xl font-bold text-gray-900">{stats.productos}</p>
-            <p className="text-xs text-gray-500 mt-1">en inventario</p>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
-            <div className="flex items-center gap-3 mb-2">
-              <TrendingUp className="w-5 h-5 text-green-600" />
-              <span className="text-sm text-gray-600">Ventas</span>
-            </div>
-            <p className="text-2xl font-bold text-gray-900">${stats.ventas}</p>
-            <p className="text-xs text-gray-500 mt-1">este mes</p>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
-            <div className="flex items-center gap-3 mb-2">
-              <ShoppingBag className="w-5 h-5 text-purple-600" />
-              <span className="text-sm text-gray-600">Marketplace</span>
-            </div>
-            <p className="text-2xl font-bold text-gray-900">{stats.productos}</p>
-            <p className="text-xs text-gray-500 mt-1">publicados</p>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
-            <div className="flex items-center gap-3 mb-2">
-              <Users className="w-5 h-5 text-blue-600" />
-              <span className="text-sm text-gray-600">Cooperativa</span>
-            </div>
-            {stats.cooperativa ? (
-              <>
-                <p className="text-sm font-bold text-gray-900 truncate">{stats.cooperativa}</p>
-                <p className="text-xs text-blue-600 mt-1">{stats.rolCooperativa}</p>
-              </>
-            ) : (
-              <>
-                <p className="text-lg font-medium text-gray-400">Sin cooperativa</p>
-                <p className="text-xs text-gray-500 mt-1">explora el Match</p>
-              </>
-            )}
-          </div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="relative">
+          <div className="w-16 h-16 border-4 border-cyan-200 border-t-cyan-600 rounded-full animate-spin"></div>
+          <Sparkles className="w-6 h-6 text-cyan-600 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         </div>
       </div>
     );
   }
 
-  // Dashboard genérico para otros roles (por ahora)
   return (
-    <div>
-      <h1 className="text-4xl font-bold mb-6">🏠 Dashboard</h1>
-      <p className="text-gray-600">
-        Dashboard para tipo de usuario: <strong>{tipoUsuario}</strong>
-      </p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50/30 to-blue-50/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Hero Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-12"
+        >
+          <div className="bg-gradient-to-r from-cyan-600 to-blue-600 rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
+            {/* Decorative elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-cyan-400/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
+            
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                  <Sparkles className="w-6 h-6" />
+                </div>
+                <div>
+                  <p className="text-cyan-100 text-sm font-medium">Bienvenido de vuelta</p>
+                  <h1 className="text-3xl md:text-4xl font-bold">{userName}</h1>
+                </div>
+              </div>
+              
+              {stats.cooperativa ? (
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 w-fit">
+                  <Award className="w-5 h-5" />
+                  <span className="text-sm font-medium">
+                    {stats.cooperativa} · {stats.rolCooperativa}
+                  </span>
+                </div>
+              ) : (
+                <p className="text-cyan-50 text-lg">
+                  Gestiona tus productos y encuentra oportunidades de negocio
+                </p>
+              )}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Stats Grid */}
+        {tipoUsuario === "normal" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12"
+          >
+            <StatsCard
+              icon={<Package className="w-6 h-6" />}
+              label="Mis Productos"
+              value={stats.productos}
+              color="cyan"
+              trend="+12%"
+            />
+            <StatsCard
+              icon={<TrendingUp className="w-6 h-6" />}
+              label="Ventas"
+              value={`$${stats.ventas.toLocaleString()}`}
+              color="blue"
+              trend="+8%"
+            />
+            <StatsCard
+              icon={<ShoppingBag className="w-6 h-6" />}
+              label="En Marketplace"
+              value={stats.productos}
+              color="purple"
+            />
+            <StatsCard
+              icon={<Users className="w-6 h-6" />}
+              label="Cooperativa"
+              value={stats.cooperativa || "Sin cooperativa"}
+              color="green"
+              isText
+            />
+          </motion.div>
+        )}
+
+        {/* Quick Actions */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mb-12"
+        >
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+            <Zap className="w-6 h-6 text-cyan-600" />
+            Acciones Rápidas
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <ActionCard
+              icon={<Package />}
+              title="Mis Productos"
+              description="Gestiona tu inventario personal"
+              href="/dashboard/productos"
+              gradient="from-cyan-500 to-blue-500"
+            />
+            <ActionCard
+              icon={<ShoppingBag />}
+              title="Marketplace"
+              description="Explora productos disponibles"
+              href="/dashboard/marketplace"
+              gradient="from-blue-500 to-purple-500"
+            />
+            <ActionCard
+              icon={<Heart />}
+              title="Match"
+              description="Encuentra cooperativas"
+              href="/dashboard/match"
+              gradient="from-purple-500 to-pink-500"
+            />
+          </div>
+        </motion.div>
+
+        {/* Cooperativa Section */}
+        {tipoUsuario === "normal" && !stats.cooperativa && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-3xl p-8 border border-cyan-100 shadow-xl"
+          >
+            <div className="flex items-start gap-6">
+              <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                <Store className="w-8 h-8 text-white" />
+              </div>
+              
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  Potencia tu negocio en equipo
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  Las cooperativas te permiten acceder a mejores precios, compartir recursos y aumentar tu volumen de venta
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+                  <BenefitItem text="Mejores precios" />
+                  <BenefitItem text="Recursos compartidos" />
+                  <BenefitItem text="Mayor volumen" />
+                </div>
+
+                <div className="flex flex-wrap gap-4">
+                  <Link
+                    href="/dashboard/cooperativas/crear"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all hover:scale-105"
+                  >
+                    <Store className="w-5 h-5" />
+                    Crear Cooperativa
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <Link
+                    href="/dashboard/match"
+                    className="inline-flex items-center gap-2 bg-white text-cyan-600 px-6 py-3 rounded-xl font-semibold border-2 border-cyan-200 hover:border-cyan-300 transition-all hover:scale-105"
+                  >
+                    <Users className="w-5 h-5" />
+                    Unirse a Cooperativa
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Cooperativa Success */}
+        {stats.cooperativa && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl p-8 border border-green-100 shadow-xl"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <Award className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900">
+                  ¡Eres parte de {stats.cooperativa}! 🎉
+                </h3>
+                <p className="text-gray-600">
+                  Como {stats.rolCooperativa}, tienes acceso a herramientas avanzadas
+                </p>
+              </div>
+            </div>
+            
+            <Link
+              href="/dashboard/mi-cooperativa"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all hover:scale-105"
+            >
+              <Store className="w-5 h-5" />
+              Ir a Mi Cooperativa
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </motion.div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Components
+type ColorType = "cyan" | "blue" | "purple" | "green";
+
+interface StatsCardProps {
+  icon: React.ReactNode;
+  label: string;
+  value: string | number;
+  color: ColorType;
+  trend?: string;
+  isText?: boolean;
+}
+
+function StatsCard({ icon, label, value, color, trend, isText = false }: StatsCardProps) {
+  const colors: Record<ColorType, string> = {
+    cyan: "from-cyan-500 to-cyan-600",
+    blue: "from-blue-500 to-blue-600",
+    purple: "from-purple-500 to-purple-600",
+    green: "from-green-500 to-green-600",
+  };
+
+  return (
+    <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+      <div className={`w-12 h-12 bg-gradient-to-br ${colors[color]} rounded-xl flex items-center justify-center text-white mb-4 shadow-md`}>
+        {icon}
+      </div>
+      <p className="text-sm text-gray-600 mb-1">{label}</p>
+      <div className="flex items-end justify-between">
+        <p className={`${isText ? 'text-lg' : 'text-3xl'} font-bold text-gray-900`}>
+          {value}
+        </p>
+        {trend && (
+          <span className="text-sm text-green-600 font-semibold">{trend}</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+interface ActionCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  href: string;
+  gradient: string;
+}
+
+function ActionCard({ icon, title, description, href, gradient }: ActionCardProps) {
+  return (
+    <Link href={href}>
+      <div className="group bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-2xl transition-all hover:scale-105 cursor-pointer">
+        <div className={`w-14 h-14 bg-gradient-to-br ${gradient} rounded-xl flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform`}>
+          {icon}
+        </div>
+        <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
+        <p className="text-gray-600 text-sm mb-4">{description}</p>
+        <div className="flex items-center text-cyan-600 font-semibold text-sm group-hover:gap-2 transition-all">
+          Ver más
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function BenefitItem({ text }: { text: string }) {
+  return (
+    <div className="flex items-center gap-2 text-sm text-gray-700">
+      <div className="w-5 h-5 bg-cyan-500 rounded-full flex items-center justify-center flex-shrink-0">
+        <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <span className="font-medium">{text}</span>
     </div>
   );
 }

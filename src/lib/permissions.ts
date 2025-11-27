@@ -41,6 +41,7 @@ export const PERMISSIONS = {
   // Solo Admin
   admin: [
     "/dashboard/usuarios",
+    "/dashboard/solicitudes-cooperativas",
     "/dashboard/cooperativas-admin",
     "/dashboard/empresas-admin",
     "/dashboard/configuracion",
