@@ -101,7 +101,7 @@ export default function HeroSection() {
 
                 <div className="flex gap-4 mt-8">
                     <a
-                        href="/register"
+                        href="/auth/login"
                         className={`
                             ${ACCENT_COLOR} text-white font-bold 
                             px-8 py-3 rounded-lg text-lg shadow-xl 
