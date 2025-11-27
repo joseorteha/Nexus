@@ -1,4 +1,7 @@
 import SettingsIcon from "../../../assets/SettingsIcon.tsx";
+import companies from  "../../../data/companies.json"
+
+
 
 export default function ProfileHeader() {
   return (
@@ -11,7 +14,7 @@ export default function ProfileHeader() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between gap-3">
                 <h1 className="text-lg md:text-2xl font-bold tracking-tight text-emerald-900 dark:text-white">
-                  {/* {profile?.nombre} {profile?.apellidos} */} Nombre empresa aqui
+                  {companies[0].name} 
                 </h1>
 
                 <div className="flex items-center gap-2">
