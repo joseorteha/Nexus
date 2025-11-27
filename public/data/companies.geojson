@@ -1,0 +1,278 @@
+{
+  "type": "FeatureCollection",
+  "name": "Companies_Around_Polos",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-90.7100, 19.6400] },
+      "properties": { "polo_id": 1001, "giro": "logistica portuaria", "empresa": "Seyba Logistics Hub" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-90.7220, 19.6320] },
+      "properties": { "polo_id": 1001, "giro": "agroindustria", "empresa": "Campeche AgroExport" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-90.7255, 19.6450] },
+      "properties": { "polo_id": 1001, "giro": "almacenamiento", "empresa": "Seybaplaya Storage Center" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-90.7135, 19.6305] },
+      "properties": { "polo_id": 1001, "giro": "servicios", "empresa": "Servicios Integrales del Puerto" }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-106.4200, 31.6500] },
+      "properties": { "polo_id": 1002, "giro": "logistica fronteriza", "empresa": "San Jerónimo CrossBorder" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-106.4350, 31.6580] },
+      "properties": { "polo_id": 1002, "giro": "automotriz", "empresa": "Juárez Auto Maquila" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-106.4305, 31.6465] },
+      "properties": { "polo_id": 1002, "giro": "manufactura", "empresa": "Frontera Manufacturing Group" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-106.4250, 31.6600] },
+      "properties": { "polo_id": 1002, "giro": "servicios logísticos", "empresa": "Border Freight Services" }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-88.3100, 18.4980] },
+      "properties": { "polo_id": 1003, "giro": "logistica", "empresa": "Chetumal Trade & Cargo" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-88.2995, 18.5050] },
+      "properties": { "polo_id": 1003, "giro": "turismo", "empresa": "Caribe Sur Tours" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-88.3125, 18.5105] },
+      "properties": { "polo_id": 1003, "giro": "comercio", "empresa": "Zona Libre Chetumal Retail" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-88.3055, 18.4955] },
+      "properties": { "polo_id": 1003, "giro": "servicios", "empresa": "Servicios Integrales Chetumal" }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-98.1950, 19.0500] },
+      "properties": { "polo_id": 1004, "giro": "tecnologia", "empresa": "Puebla Tech Campus" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-98.2050, 19.0455] },
+      "properties": { "polo_id": 1004, "giro": "software", "empresa": "Cloud Solutions Puebla" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-98.1905, 19.0380] },
+      "properties": { "polo_id": 1004, "giro": "energias renovables", "empresa": "Sostenibilidad Verde MX" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-98.2005, 19.0400] },
+      "properties": { "polo_id": 1004, "giro": "servicios empresariales", "empresa": "Centro de Innovación Puebla" }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-98.9500, 20.1700] },
+      "properties": { "polo_id": 1005, "giro": "manufactura ligera", "empresa": "Zapotlán Light Industries" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-98.9605, 20.1600] },
+      "properties": { "polo_id": 1005, "giro": "agroindustria", "empresa": "Valle de Zapotlán Agro" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-98.9525, 20.1555] },
+      "properties": { "polo_id": 1005, "giro": "logistica", "empresa": "Zapotlán Logistics Park" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-98.9580, 20.1680] },
+      "properties": { "polo_id": 1005, "giro": "servicios", "empresa": "Servicios Integrales Zapotlán" }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-102.0150, 20.3450] },
+      "properties": { "polo_id": 1006, "giro": "agroindustria", "empresa": "Bajío Agro Industrial Park" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-102.0280, 20.3380] },
+      "properties": { "polo_id": 1006, "giro": "manufactura", "empresa": "Michoacán Industrial Systems" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-102.0225, 20.3320] },
+      "properties": { "polo_id": 1006, "giro": "logistica", "empresa": "Bajío Freight Services" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-102.0120, 20.3425] },
+      "properties": { "polo_id": 1006, "giro": "servicios empresariales", "empresa": "Centro de Apoyo al Exportador" }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-100.6150, 20.4580] },
+      "properties": { "polo_id": 1010, "giro": "logistica", "empresa": "Puerta Logística Bajío Hub" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-100.6255, 20.4480] },
+      "properties": { "polo_id": 1010, "giro": "automotriz", "empresa": "Guanajuato Auto Cluster" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-100.6200, 20.4450] },
+      "properties": { "polo_id": 1010, "giro": "almacenamiento", "empresa": "Bajío Distribution Center" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-100.6300, 20.4520] },
+      "properties": { "polo_id": 1010, "giro": "servicios logísticos", "empresa": "Transporte y Carga del Centro" }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-98.7580, 20.0950] },
+      "properties": { "polo_id": 1012, "giro": "manufactura", "empresa": "Parque Hidalgo Manufacturing" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-98.7680, 20.0865] },
+      "properties": { "polo_id": 1012, "giro": "logistica", "empresa": "Hidalgo Logistics Center" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-98.7640, 20.0920] },
+      "properties": { "polo_id": 1012, "giro": "servicios", "empresa": "Servicios Empresariales Hidalgo" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-98.7550, 20.0880] },
+      "properties": { "polo_id": 1012, "giro": "construccion", "empresa": "Constructora Parque Hidalgo" }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-99.0200, 19.4180] },
+      "properties": { "polo_id": 1015, "giro": "servicios", "empresa": "Neza Business Services" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-99.0320, 19.4100] },
+      "properties": { "polo_id": 1015, "giro": "comercio", "empresa": "Centro Comercial Oriente MX" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-99.0255, 19.4205] },
+      "properties": { "polo_id": 1015, "giro": "logistica urbana", "empresa": "Valle de México Urban Logistics" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-99.0185, 19.4120] },
+      "properties": { "polo_id": 1015, "giro": "tecnologia", "empresa": "Neza Digital Services" }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-97.9200, 19.3200] },
+      "properties": { "polo_id": 1016, "giro": "manufactura", "empresa": "Huamantla Industrial Park" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-97.9300, 19.3100] },
+      "properties": { "polo_id": 1016, "giro": "agroindustria", "empresa": "Altiplano Agro Foods" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-97.9280, 19.3180] },
+      "properties": { "polo_id": 1016, "giro": "logistica", "empresa": "Huamantla Cargo & Routes" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-97.9225, 19.3140] },
+      "properties": { "polo_id": 1016, "giro": "servicios", "empresa": "Servicios Empresariales Huamantla" }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-97.3980, 20.9600] },
+      "properties": { "polo_id": 1019, "giro": "logistica portuaria", "empresa": "Tuxpan Port Logistics" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-97.4085, 20.9500] },
+      "properties": { "polo_id": 1019, "giro": "energia", "empresa": "Costa Norte Energy Terminal" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-97.4020, 20.9525] },
+      "properties": { "polo_id": 1019, "giro": "agroindustria", "empresa": "Veracruz Agro Export Tuxpan" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-97.4100, 20.9620] },
+      "properties": { "polo_id": 1019, "giro": "servicios", "empresa": "Servicios Marítimos del Golfo" }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-104.6520, 24.0250] },
+      "properties": { "polo_id": 1020, "giro": "logistica", "empresa": "Durango Logistics Center" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-104.6650, 24.0180] },
+      "properties": { "polo_id": 1020, "giro": "manufactura", "empresa": "Durango Industrial Park" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-104.6600, 24.0125] },
+      "properties": { "polo_id": 1020, "giro": "madera y muebles", "empresa": "Sierra Durango Woodworks" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-104.6550, 24.0285] },
+      "properties": { "polo_id": 1020, "giro": "servicios", "empresa": "Servicios Empresariales Durango" }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-110.9500, 29.0780] },
+      "properties": { "polo_id": 1021, "giro": "automotriz", "empresa": "Hermosillo Auto Cluster" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-110.9620, 29.0700] },
+      "properties": { "polo_id": 1021, "giro": "aeroespacial", "empresa": "Sonora Aerospace Park" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-110.9580, 29.0655] },
+      "properties": { "polo_id": 1021, "giro": "manufactura avanzada", "empresa": "Maquila Avanzada del Norte" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-110.9525, 29.0740] },
+      "properties": { "polo_id": 1021, "giro": "servicios de ingenieria", "empresa": "Hermosillo Engineering Services" }
+    }
+  ]
+}
