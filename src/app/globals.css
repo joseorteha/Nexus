@@ -211,4 +211,8 @@ body {
   }
 
 }
+
+/* Swiper Styles */
+@import 'swiper/css';
+@import 'swiper/css/pagination';
 }
