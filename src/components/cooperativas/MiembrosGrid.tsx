@@ -65,7 +65,7 @@ export const MiembrosGrid: React.FC<MiembrosGridProps> = ({
         };
       default:
         return {
-          label: 'Desconocido',
+          label: 'Inactivo',
           color: 'bg-gray-500/10 text-gray-700 border-gray-300',
           icon: Users
         };
@@ -199,6 +199,3 @@ export const MiembrosGrid: React.FC<MiembrosGridProps> = ({
     </div>
   );
 };
-
-
-

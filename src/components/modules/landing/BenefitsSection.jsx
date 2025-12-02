@@ -1,14 +1,16 @@
-// Componente placeholder para los iconos de los actores
-const RoleIcon = ({ children, colorClass }) => (
-    <div className={`text-5xl ${colorClass} bg-opacity-10 p-4 rounded-xl mb-4 inline-block`}>
-        {children}
+import { Building2, Link, Shield, CheckCircle } from "lucide-react";
+
+// Componente para los iconos de los actores
+const RoleIcon = ({ Icon, bgClass, iconClass }) => (
+    <div className={`${bgClass} p-4 rounded-xl mb-4 inline-flex items-center justify-center`}>
+        <Icon className={`w-12 h-12 ${iconClass}`} />
     </div>
 );
 
-// Iconos Placeholders (reemplaza con tus iconos reales)
-const BusinessIcon = () => <RoleIcon colorClass="text-blue-600 bg-blue-600">🏢</RoleIcon>; // Edificio
-const CooperativeIcon = () => <RoleIcon colorClass="text-green-600 bg-green-600">🔗</RoleIcon>; // Red/Cadena
-const GovernmentIcon = () => <RoleIcon colorClass="text-red-600 bg-red-600">🛡️</RoleIcon>; // Escudo/Gobierno
+// Iconos de lucide-react
+const BusinessIcon = () => <RoleIcon Icon={Building2} bgClass="bg-blue-100" iconClass="text-blue-600" />;
+const CooperativeIcon = () => <RoleIcon Icon={Link} bgClass="bg-green-100" iconClass="text-green-600" />;
+const GovernmentIcon = () => <RoleIcon Icon={Shield} bgClass="bg-red-100" iconClass="text-red-600" />;
 
 
 export default function BenefitsSection() {
@@ -79,7 +81,7 @@ export default function BenefitsSection() {
                             <ul className="mt-4 text-gray-700 space-y-3">
                                 {actor.benefits.map((benefit, j) => (
                                     <li key={j} className="flex items-start">
-                                        <span className="text-green-500 font-bold mr-2 mt-1">✔</span>
+                                        <CheckCircle className="text-green-500 w-5 h-5 mr-2 mt-1 flex-shrink-0" />
                                         <span className="leading-normal">{benefit}</span>
                                     </li>
                                 ))}

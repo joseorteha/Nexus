@@ -180,20 +180,10 @@ export const AprobacionCard: React.FC<AprobacionCardProps> = ({
                 </h4>
                 <div className="space-y-3">
                   <div>
-                    <span className="text-sm text-muted-foreground mb-2 block">Productos:</span>
-                    <div className="flex flex-wrap gap-2">
-                      {(cooperativeData as any).products?.map((product: string, index: number) => (
-                        <Badge key={index} variant="info">
-                          {product}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
                     <span className="text-sm text-muted-foreground mb-2 block">Categorías:</span>
                     <div className="flex flex-wrap gap-2">
                       {cooperativeData.category?.map((cat: string, index: number) => (
-                        <Badge key={index} className="bg-purple-100 text-purple-700">
+                        <Badge key={index} variant="default">
                           {cat}
                         </Badge>
                       ))}
@@ -243,15 +233,16 @@ export const AprobacionCard: React.FC<AprobacionCardProps> = ({
                 </Card>
               )}
 
-              {/* Miembros fundadores */}
-              {(cooperativeData as any).foundingMembers && (cooperativeData as any).foundingMembers.length > 0 && (
+              {/* Miembros fundadores - Comentado: foundingMembers no existe en Cooperative type */}
+              {/* 
+              {cooperativeData.foundingMembers && cooperativeData.foundingMembers.length > 0 && (
                 <Card className="p-4 border-2 border-purple-200">
                   <h4 className="font-semibold mb-3 flex items-center gap-2">
                     <Users className="h-4 w-4" />
-                    Miembros Fundadores ({(cooperativeData as any).foundingMembers.length})
+                    Miembros Fundadores ({cooperativeData.foundingMembers.length})
                   </h4>
                   <div className="space-y-2">
-                    {(cooperativeData as any).foundingMembers.map((member: string, index: number) => (
+                    {cooperativeData.foundingMembers.map((member: string, index: number) => (
                       <div key={index} className="flex items-center gap-2 text-sm">
                         <div className="h-8 w-8 rounded-full bg-gradient-to-br from-purple-300 to-pink-300 flex items-center justify-center text-white text-xs font-bold">
                           {member.charAt(0).toUpperCase()}
@@ -262,6 +253,7 @@ export const AprobacionCard: React.FC<AprobacionCardProps> = ({
                   </div>
                 </Card>
               )}
+              */}
             </div>
           ) : (
             <div className="space-y-4">
@@ -381,7 +373,7 @@ export const AprobacionCard: React.FC<AprobacionCardProps> = ({
 
                   <div className="flex gap-3">
                     <Button
-                      variant="default"
+                      variant="outline"
                       onClick={handleCancel}
                       disabled={isProcessing}
                       className="flex-1"
@@ -416,6 +408,3 @@ export const AprobacionCard: React.FC<AprobacionCardProps> = ({
     </div>
   );
 };
-
-
-

@@ -1,3 +1,4 @@
+import { Link, Eye, FileText } from "lucide-react";
 import { ReactNode } from "react";
 
 interface ProblemIconProps {
@@ -5,15 +6,15 @@ interface ProblemIconProps {
 }
 
 const ProblemIcon = ({ children }: ProblemIconProps) => (
-  <div className="text-4xl text-blue-500 bg-blue-50 p-3 rounded-xl mb-4 inline-block shadow-inner">
+  <div className="text-blue-500 bg-blue-50 p-4 rounded-xl mb-4 inline-block shadow-inner">
     {children}
   </div>
 );
 
-// Iconos placeholders (reemplaza con tus iconos reales)
-const IntegrationIcon = () => <ProblemIcon>🔗</ProblemIcon>; // Ejemplo: Link/Chain Icon
-const VisibilityIcon = () => <ProblemIcon>👁️</ProblemIcon>;   // Ejemplo: Eye/Search Icon
-const ManualIcon = () => <ProblemIcon>📝</ProblemIcon>;     // Ejemplo: File/Document Icon
+// Iconos de lucide-react
+const IntegrationIcon = () => <ProblemIcon><Link className="w-10 h-10" /></ProblemIcon>;
+const VisibilityIcon = () => <ProblemIcon><Eye className="w-10 h-10" /></ProblemIcon>;
+const ManualIcon = () => <ProblemIcon><FileText className="w-10 h-10" /></ProblemIcon>;
 
 export default function ProblemSection() {
   const problems = [

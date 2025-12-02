@@ -116,7 +116,7 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
               <span className="text-sm">Fundada en {formatDate(cooperativa.foundedDate)}</span>
             </div>
           </div>
-          <Badge variant="info" className="bg-white/20 text-white border-white/30">
+          <Badge variant="default" className="bg-white/20 text-white border-white/30">
             {statusConfig.label}
           </Badge>
         </div>
@@ -166,7 +166,7 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
           </h4>
           <div className="flex flex-wrap gap-2">
             {cooperativa.category.map((cat, index) => (
-              <Badge key={index} variant="info" className="bg-purple-100 text-purple-700">
+              <Badge key={index} variant="default" className="bg-purple-100 text-purple-700">
                 {cat}
               </Badge>
             ))}
@@ -181,7 +181,7 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
               Certificaciones
             </h4>
             <div className="flex flex-wrap gap-2">
-              {cooperativa.certifications?.map((cert, index) => (
+              {cooperativa.certifications.map((cert, index) => (
                 <Badge 
                   key={index} 
                   variant="default" 
@@ -213,7 +213,7 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
         {showActions && cooperativa.status === 'active' && (
           <div className="flex gap-3 pt-4 border-t">
             <Button 
-              variant="default" 
+              variant="outline" 
               className="flex-1"
               onClick={() => onVerDetalles?.(cooperativa.id)}
             >
@@ -244,6 +244,3 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
     </Card>
   );
 };
-
-
-
