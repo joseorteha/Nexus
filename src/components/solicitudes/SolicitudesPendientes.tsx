@@ -99,7 +99,7 @@ export const SolicitudesPendientes: React.FC<SolicitudesPendientesProps> = ({
         const matches = 
           sol.userName.toLowerCase().includes(searchLower) ||
           sol.userEmail.toLowerCase().includes(searchLower) ||
-          sol.cooperativeName?.toLowerCase().includes(searchLower);
+          sol.cooperativeName.toLowerCase().includes(searchLower);
         
         if (!matches) return false;
       }
@@ -161,7 +161,7 @@ export const SolicitudesPendientes: React.FC<SolicitudesPendientesProps> = ({
 
           {/* Botón de filtros */}
           <Button
-            variant="default"
+            variant={showFilters ? "default" : "outline"}
             onClick={() => setShowFilters(!showFilters)}
             className="relative"
           >
@@ -169,7 +169,7 @@ export const SolicitudesPendientes: React.FC<SolicitudesPendientesProps> = ({
             Filtros
             {activeFiltersCount > 0 && (
               <Badge 
-                variant="info" 
+                variant="secondary" 
                 className="ml-2 bg-orange-600 text-white h-5 w-5 p-0 flex items-center justify-center rounded-full"
               >
                 {activeFiltersCount}
@@ -184,73 +184,66 @@ export const SolicitudesPendientes: React.FC<SolicitudesPendientesProps> = ({
             <div>
               <label className="text-sm font-semibold mb-2 block">Tipo de Solicitud</label>
               <div className="flex flex-wrap gap-2">
-                <div onClick={() => setFilterType('all')} className="cursor-pointer">
-                  <Badge
-                    variant="default"
-                    className=""
-                  >
-                    Todas
-                  </Badge>
-                </div>
-                <div onClick={() => setFilterType('create')} className="cursor-pointer">
-                  <Badge
-                    variant="default"
-                    className={`${filterType === 'create' ? 'bg-purple-600' : 'hover:bg-purple-50'}`}
-                  >
-                    <Building2 className="h-3 w-3 mr-1" />
-                    Crear Cooperativa
-                  </Badge>
-                </div>
-                <div onClick={() => setFilterType('join')} className="cursor-pointer">
-                  <Badge
-                    variant="default"
-                    className={`${filterType === 'join' ? 'bg-blue-600' : 'hover:bg-blue-50'}`}
-                  >
-                    <Users className="h-3 w-3 mr-1" />
-                    Unirse a Cooperativa
-                  </Badge>
-                </div>
+                <Badge
+                  variant={filterType === 'all' ? "default" : "outline"}
+                  className="cursor-pointer"
+                  onClick={() => setFilterType('all')}
+                >
+                  Todas
+                </Badge>
+                <Badge
+                  variant={filterType === 'create' ? "default" : "outline"}
+                  className={`cursor-pointer ${filterType === 'create' ? 'bg-purple-600' : 'hover:bg-purple-50'}`}
+                  onClick={() => setFilterType('create')}
+                >
+                  <Building2 className="h-3 w-3 mr-1" />
+                  Crear Cooperativa
+                </Badge>
+                <Badge
+                  variant={filterType === 'join' ? "default" : "outline"}
+                  className={`cursor-pointer ${filterType === 'join' ? 'bg-blue-600' : 'hover:bg-blue-50'}`}
+                  onClick={() => setFilterType('join')}
+                >
+                  <Users className="h-3 w-3 mr-1" />
+                  Unirse
+                </Badge>
               </div>
             </div>
 
             <div>
               <label className="text-sm font-semibold mb-2 block">Estado</label>
               <div className="flex flex-wrap gap-2">
-                <div onClick={() => setFilterStatus('all')} className="cursor-pointer">
-                  <Badge
-                    variant="default"
-                    className=""
-                  >
-                    Todos
-                  </Badge>
-                </div>
-                <div onClick={() => setFilterStatus('pending')} className="cursor-pointer">
-                  <Badge
-                    variant="default"
-                    className={`${filterStatus === 'pending' ? 'bg-orange-600' : 'hover:bg-orange-50'}`}
-                  >
-                    <Clock className="h-3 w-3 mr-1" />
-                    Pendientes
-                  </Badge>
-                </div>
-                <div onClick={() => setFilterStatus('approved')} className="cursor-pointer">
-                  <Badge
-                    variant="default"
-                    className={`${filterStatus === 'approved' ? 'bg-green-600' : 'hover:bg-green-50'}`}
-                  >
-                    <CheckCircle className="h-3 w-3 mr-1" />
-                    Aprobadas
-                  </Badge>
-                </div>
-                <div onClick={() => setFilterStatus('rejected')} className="cursor-pointer">
-                  <Badge
-                    variant="default"
-                    className={`${filterStatus === 'rejected' ? 'bg-red-600' : 'hover:bg-red-50'}`}
-                  >
-                    <XCircle className="h-3 w-3 mr-1" />
-                    Rechazadas
-                  </Badge>
-                </div>
+                <Badge
+                  variant={filterStatus === 'all' ? "default" : "outline"}
+                  className="cursor-pointer"
+                  onClick={() => setFilterStatus('all')}
+                >
+                  Todos
+                </Badge>
+                <Badge
+                  variant={filterStatus === 'pending' ? "default" : "outline"}
+                  className={`cursor-pointer ${filterStatus === 'pending' ? 'bg-orange-600' : 'hover:bg-orange-50'}`}
+                  onClick={() => setFilterStatus('pending')}
+                >
+                  <Clock className="h-3 w-3 mr-1" />
+                  Pendientes
+                </Badge>
+                <Badge
+                  variant={filterStatus === 'approved' ? "default" : "outline"}
+                  className={`cursor-pointer ${filterStatus === 'approved' ? 'bg-green-600' : 'hover:bg-green-50'}`}
+                  onClick={() => setFilterStatus('approved')}
+                >
+                  <CheckCircle className="h-3 w-3 mr-1" />
+                  Aprobadas
+                </Badge>
+                <Badge
+                  variant={filterStatus === 'rejected' ? "default" : "outline"}
+                  className={`cursor-pointer ${filterStatus === 'rejected' ? 'bg-red-600' : 'hover:bg-red-50'}`}
+                  onClick={() => setFilterStatus('rejected')}
+                >
+                  <XCircle className="h-3 w-3 mr-1" />
+                  Rechazadas
+                </Badge>
               </div>
             </div>
 
@@ -347,7 +340,7 @@ export const SolicitudesPendientes: React.FC<SolicitudesPendientesProps> = ({
                   {/* Acciones */}
                   <div className="flex md:flex-col gap-2">
                     <Button
-                      variant="default"
+                      variant="outline"
                       size="sm"
                       onClick={() => onVerDetalles(solicitud)}
                       className="flex-1 md:flex-none"
@@ -386,6 +379,3 @@ export const SolicitudesPendientes: React.FC<SolicitudesPendientesProps> = ({
     </div>
   );
 };
-
-
-
