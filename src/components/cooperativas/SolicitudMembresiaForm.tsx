@@ -107,7 +107,7 @@ export const SolicitudMembresiaForm: React.FC<SolicitudMembresiaFormProps> = ({
             </p>
             <div className="flex flex-wrap gap-2">
               {cooperativa.category.map((cat, index) => (
-                <Badge key={index} variant="secondary" className="bg-purple-100 text-purple-700">
+                <Badge key={index} variant="info" className="bg-purple-100 text-purple-700">
                   {cat}
                 </Badge>
               ))}
@@ -203,7 +203,7 @@ export const SolicitudMembresiaForm: React.FC<SolicitudMembresiaFormProps> = ({
           {/* Botones */}
           <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
             <Button
-              variant="outline"
+              variant="default"
               onClick={onCancel}
               disabled={isSubmitting}
               className="flex-1"
@@ -241,3 +241,6 @@ export const SolicitudMembresiaForm: React.FC<SolicitudMembresiaFormProps> = ({
     </div>
   );
 };
+
+
+

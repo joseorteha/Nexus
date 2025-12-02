@@ -191,18 +191,18 @@ export const CooperativasList: React.FC<CooperativasListProps> = ({
               </div>
               <div className="flex flex-wrap gap-2">
                 {CATEGORIAS.map(cat => (
-                  <Badge
-                    key={cat}
-                    variant="default"
-                    className={`cursor-pointer transition-colors ${
-                      selectedCategories.includes(cat)
-                        ? 'bg-purple-600 hover:bg-purple-700'
-                        : 'hover:bg-purple-50'
-                    }`}
-                    onClick={() => toggleFilter('category', cat)}
-                  >
-                    {cat}
-                  </Badge>
+                  <div key={cat} onClick={() => toggleFilter('category', cat)} className="cursor-pointer">
+                    <Badge
+                      variant="default"
+                      className={`transition-colors ${
+                        selectedCategories.includes(cat)
+                          ? 'bg-purple-600 hover:bg-purple-700'
+                          : 'hover:bg-purple-50'
+                      }`}
+                    >
+                      {cat}
+                    </Badge>
+                  </div>
                 ))}
               </div>
             </div>
@@ -217,18 +217,18 @@ export const CooperativasList: React.FC<CooperativasListProps> = ({
               </div>
               <div className="flex flex-wrap gap-2">
                 {REGIONES.map(region => (
-                  <Badge
-                    key={region}
-                    variant="default"
-                    className={`cursor-pointer transition-colors ${
-                      selectedRegions.includes(region)
-                        ? 'bg-blue-600 hover:bg-blue-700'
-                        : 'hover:bg-blue-50'
-                    }`}
-                    onClick={() => toggleFilter('region', region)}
-                  >
-                    {region}
-                  </Badge>
+                  <div key={region} onClick={() => toggleFilter('region', region)} className="cursor-pointer">
+                    <Badge
+                      variant="default"
+                      className={`transition-colors ${
+                        selectedRegions.includes(region)
+                          ? 'bg-blue-600 hover:bg-blue-700'
+                          : 'hover:bg-blue-50'
+                      }`}
+                    >
+                      {region}
+                    </Badge>
+                  </div>
                 ))}
               </div>
             </div>
@@ -243,18 +243,18 @@ export const CooperativasList: React.FC<CooperativasListProps> = ({
               </div>
               <div className="flex flex-wrap gap-2">
                 {CERTIFICACIONES.map(cert => (
-                  <Badge
-                    key={cert}
-                    variant="default"
-                    className={`cursor-pointer transition-colors ${
-                      selectedCertifications.includes(cert)
-                        ? 'bg-green-600 hover:bg-green-700'
-                        : 'hover:bg-green-50'
-                    }`}
-                    onClick={() => toggleFilter('certification', cert)}
-                  >
-                    {cert}
-                  </Badge>
+                  <div key={cert} onClick={() => toggleFilter('certification', cert)} className="cursor-pointer">
+                    <Badge
+                      variant="default"
+                      className={`transition-colors ${
+                        selectedCertifications.includes(cert)
+                          ? 'bg-green-600 hover:bg-green-700'
+                          : 'hover:bg-green-50'
+                      }`}
+                    >
+                      {cert}
+                    </Badge>
+                  </div>
                 ))}
               </div>
             </div>
@@ -297,7 +297,7 @@ export const CooperativasList: React.FC<CooperativasListProps> = ({
               }
             </p>
             {activeFiltersCount > 0 && (
-              <Button variant="outline" onClick={clearAllFilters}>
+              <Button variant="default" onClick={clearAllFilters}>
                 <X className="h-4 w-4 mr-2" />
                 Limpiar filtros
               </Button>
@@ -320,4 +320,7 @@ export const CooperativasList: React.FC<CooperativasListProps> = ({
     </div>
   );
 };
+
+
+
 
