@@ -116,7 +116,7 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
               <span className="text-sm">Fundada en {formatDate(cooperativa.foundedDate)}</span>
             </div>
           </div>
-          <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+          <Badge variant="default" className="bg-white/20 text-white border-white/30">
             {statusConfig.label}
           </Badge>
         </div>
@@ -166,7 +166,7 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
           </h4>
           <div className="flex flex-wrap gap-2">
             {cooperativa.category.map((cat, index) => (
-              <Badge key={index} variant="secondary" className="bg-purple-100 text-purple-700">
+              <Badge key={index} variant="default" className="bg-purple-100 text-purple-700">
                 {cat}
               </Badge>
             ))}
@@ -174,7 +174,7 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
         </div>
 
         {/* Certificaciones */}
-        {cooperativa.certifications.length > 0 && (
+        {cooperativa.certifications && cooperativa.certifications.length > 0 && (
           <div>
             <h4 className="text-sm font-semibold text-muted-foreground mb-2 flex items-center gap-2">
               <Award className="h-4 w-4" />
