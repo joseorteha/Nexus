@@ -1,15 +1,17 @@
-// Definición de colores para los íconos (para darle más estilo)
+import { Building2, Handshake, Truck, Shield } from "lucide-react";
+
+// Definición de colores para los íconos
 const IconStyles = [
-  { icon: "🏢", color: "text-blue-500", bg: "bg-blue-50" }, // Empresas
-  { icon: "🤝", color: "text-green-500", bg: "bg-green-50" }, // Cooperativas
-  { icon: "🚚", color: "text-orange-500", bg: "bg-orange-50" }, // Transportistas
-  { icon: "🛡️", color: "text-red-500", bg: "bg-red-50" }, // Gobierno y Polos
+  { Icon: Building2, color: "text-blue-500", bg: "bg-blue-50" }, // Empresas
+  { Icon: Handshake, color: "text-green-500", bg: "bg-green-50" }, // Cooperativas
+  { Icon: Truck, color: "text-orange-500", bg: "bg-orange-50" }, // Transportistas
+  { Icon: Shield, color: "text-red-500", bg: "bg-red-50" }, // Gobierno y Polos
 ];
 
 // Componente para manejar el estilo del ícono
-const IconBox = ({ icon, color, bg }) => (
+const IconBox = ({ Icon, color, bg }) => (
     <div className={`p-4 rounded-xl ${bg} inline-flex justify-center items-center mb-4`}>
-        <span className={`text-3xl ${color}`}>{icon}</span>
+        <Icon className={`w-10 h-10 ${color}`} />
     </div>
 );
 
@@ -19,28 +21,28 @@ export default function WhoIsFor() {
         {
             title: "Empresas Comerciales",
             desc: "Optimiza ventas, automatiza compras y digitaliza la operación diaria.",
-            icon: IconStyles[0].icon,
+            Icon: IconStyles[0].Icon,
             color: IconStyles[0].color,
             bg: IconStyles[0].bg,
         },
         {
             title: "Cooperativas y Asociaciones",
             desc: "Conecta con nuevos mercados, negocia mejores condiciones y aumenta tu visibilidad colectiva.",
-            icon: IconStyles[1].icon,
+            Icon: IconStyles[1].Icon,
             color: IconStyles[1].color,
             bg: IconStyles[1].bg,
         },
         {
             title: "Operadores Logísticos y Transportistas",
             desc: "Gestiona eficientemente cargas, optimiza rutas y asegura entregas en tiempo real mediante geolocalización.",
-            icon: IconStyles[2].icon,
+            Icon: IconStyles[2].Icon,
             color: IconStyles[2].color,
             bg: IconStyles[2].bg,
         },
         {
             title: "Gobierno y Polos de Desarrollo",
             desc: "Accede a datos territoriales y económicos consolidados para la planificación estratégica y apoyo al crecimiento regional.",
-            icon: IconStyles[3].icon,
+            Icon: IconStyles[3].Icon,
             color: IconStyles[3].color,
             bg: IconStyles[3].bg,
         }
@@ -70,7 +72,7 @@ export default function WhoIsFor() {
                             style={{ animationDelay: `${i * 0.12}s` }}
                         >
                             {/* Icono mejorado */}
-                            <IconBox icon={d.icon} color={d.color} bg={d.bg} /> 
+                            <IconBox Icon={d.Icon} color={d.color} bg={d.bg} /> 
                             
                             <h3 className="text-xl font-bold text-gray-900">
                                 {d.title}
