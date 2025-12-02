@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/Badge';
 import { 
   UserCircle,
   Users,
@@ -90,8 +90,8 @@ export const RoleBadge: React.FC<RoleBadgeProps> = ({
 
   return (
     <Badge 
-      variant={variant}
-      className={`${config.color} ${sizeClasses.badge} font-medium transition-colors`}
+      variant="default"
+      className={`${variant === 'outline' ? 'bg-transparent border' : ''} ${config.color} ${sizeClasses.badge} font-medium transition-colors`}
     >
       {showIcon && (
         <Icon 
@@ -100,7 +100,7 @@ export const RoleBadge: React.FC<RoleBadgeProps> = ({
           }`} 
         />
       )}
-      {config.label}
+      <span>{config.label}</span>
     </Badge>
   );
 };
@@ -148,7 +148,7 @@ export const RoleBadgeShowcase: React.FC = () => {
                   key={role} 
                   role={role} 
                   size={size}
-                  variant="outline"
+                  variant="default"
                 />
               ))}
             </div>
@@ -165,7 +165,7 @@ export const RoleBadgeShowcase: React.FC = () => {
               key={role} 
               role={role} 
               showIcon={false}
-              variant="outline"
+              variant="default"
             />
           ))}
         </div>
@@ -173,3 +173,6 @@ export const RoleBadgeShowcase: React.FC = () => {
     </div>
   );
 };
+
+
+

@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/Card';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
 import { 
   Search, 
   Filter,
@@ -100,7 +100,7 @@ export const CooperativasList: React.FC<CooperativasListProps> = ({
       // Filtro por certificaciones
       if (selectedCertifications.length > 0) {
         const hasCertification = selectedCertifications.some(cert =>
-          coop.certifications.includes(cert)
+          coop.certifications?.includes(cert)
         );
         if (!hasCertification) return false;
       }
@@ -160,7 +160,7 @@ export const CooperativasList: React.FC<CooperativasListProps> = ({
           {/* Botón de filtros */}
           {showFilters && (
             <Button
-              variant={showFilterPanel ? "default" : "outline"}
+              variant="default"
               onClick={() => setShowFilterPanel(!showFilterPanel)}
               className="relative"
             >
@@ -168,7 +168,7 @@ export const CooperativasList: React.FC<CooperativasListProps> = ({
               Filtros
               {activeFiltersCount > 0 && (
                 <Badge 
-                  variant="secondary" 
+                  variant="info" 
                   className="ml-2 bg-purple-600 text-white h-5 w-5 p-0 flex items-center justify-center rounded-full"
                 >
                   {activeFiltersCount}
@@ -193,7 +193,7 @@ export const CooperativasList: React.FC<CooperativasListProps> = ({
                 {CATEGORIAS.map(cat => (
                   <Badge
                     key={cat}
-                    variant={selectedCategories.includes(cat) ? "default" : "outline"}
+                    variant="default"
                     className={`cursor-pointer transition-colors ${
                       selectedCategories.includes(cat)
                         ? 'bg-purple-600 hover:bg-purple-700'
@@ -219,7 +219,7 @@ export const CooperativasList: React.FC<CooperativasListProps> = ({
                 {REGIONES.map(region => (
                   <Badge
                     key={region}
-                    variant={selectedRegions.includes(region) ? "default" : "outline"}
+                    variant="default"
                     className={`cursor-pointer transition-colors ${
                       selectedRegions.includes(region)
                         ? 'bg-blue-600 hover:bg-blue-700'
@@ -245,7 +245,7 @@ export const CooperativasList: React.FC<CooperativasListProps> = ({
                 {CERTIFICACIONES.map(cert => (
                   <Badge
                     key={cert}
-                    variant={selectedCertifications.includes(cert) ? "default" : "outline"}
+                    variant="default"
                     className={`cursor-pointer transition-colors ${
                       selectedCertifications.includes(cert)
                         ? 'bg-green-600 hover:bg-green-700'
@@ -320,3 +320,4 @@ export const CooperativasList: React.FC<CooperativasListProps> = ({
     </div>
   );
 };
+

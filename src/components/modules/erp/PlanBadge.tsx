@@ -18,7 +18,7 @@ export function PlanBadge({ planType, status, size = "md" }: PlanBadgeProps) {
       case "Premium":
         return "success";
       case "Free":
-        return "secondary";
+        return "info";
     }
   };
 
@@ -73,3 +73,6 @@ export function FeatureLocked({ featureName, requiredPlan, currentPlan, message 
     </div>
   );
 }
+
+
+
