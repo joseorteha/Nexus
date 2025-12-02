@@ -34,3 +34,6 @@ export function StatsCard({ icon, label, value, color, trend, isText = false }: 
     </div>
   );
 }
+
+
+

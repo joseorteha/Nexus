@@ -1,4 +1,4 @@
-import SettingsIcon from "../../../assets/SettingsIcon.tsx";
+import SettingsIcon from "../../../assets/SettingsIcon";
 import companies from  "../../../data/companies.json"
 
 
@@ -58,3 +58,6 @@ export default function ProfileHeader() {
 
 )
 }
+
+
+

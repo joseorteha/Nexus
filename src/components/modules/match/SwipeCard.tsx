@@ -161,7 +161,7 @@ export function SwipeCard({ company, onLike, onPass }: SwipeCardProps) {
           {/* Botones de Swipe */}
           <div className="flex gap-4 pt-4">
             <Button
-              variant="outline"
+              variant="default"
               size="lg"
               onClick={() => handleSwipe("pass")}
               className="flex-1 border-2 border-red-300 text-red-600 hover:bg-red-50 hover:border-red-500 rounded-xl transition-all hover:scale-105"
@@ -186,3 +186,6 @@ export function SwipeCard({ company, onLike, onPass }: SwipeCardProps) {
     </div>
   );
 }
+
+
+

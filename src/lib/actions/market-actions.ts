@@ -17,3 +17,6 @@ export async function checkout(cartItems: any[]) {
   // TODO: Procesar compra
   console.log("Checkout:", cartItems);
 }
+
+
+

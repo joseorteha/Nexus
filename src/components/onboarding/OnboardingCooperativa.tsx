@@ -440,7 +440,7 @@ export function OnboardingCooperativa({ onComplete }: OnboardingProps) {
             <Button
               onClick={handleBack}
               disabled={step === 1}
-              variant="outline"
+              variant="default"
               className="flex items-center gap-2"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -486,3 +486,6 @@ export function OnboardingCooperativa({ onComplete }: OnboardingProps) {
     </div>
   );
 }
+
+
+

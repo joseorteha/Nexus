@@ -107,3 +107,6 @@ export function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) 
   // Authorized
   return <>{children}</>;
 }
+
+
+

@@ -1,6 +1,6 @@
 "use client";
 
-import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/Sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { CartProvider } from "@/contexts/CartContext";
 
@@ -28,3 +28,6 @@ export default function DashboardLayout({
     </CartProvider>
   );
 }
+
+
+

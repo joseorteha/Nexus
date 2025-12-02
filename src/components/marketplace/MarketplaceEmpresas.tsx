@@ -297,3 +297,6 @@ function ProductCard({ producto }: { producto: Producto }) {
   );
 }
 
+
+
+

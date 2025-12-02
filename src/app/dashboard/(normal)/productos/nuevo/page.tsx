@@ -99,7 +99,7 @@ export default function NuevoProductoPage() {
       {/* Header */}
       <div className="mb-8">
         <Button
-          variant="outline"
+          variant="default"
           size="sm"
           onClick={() => router.back()}
           className="mb-4"
@@ -285,7 +285,7 @@ export default function NuevoProductoPage() {
         <div className="flex gap-4">
           <Button
             type="button"
-            variant="outline"
+            variant="default"
             onClick={() => router.back()}
             className="flex-1"
             disabled={loading}
@@ -315,3 +315,6 @@ export default function NuevoProductoPage() {
     </div>
   );
 }
+
+
+

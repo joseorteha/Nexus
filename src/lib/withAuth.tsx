@@ -36,3 +36,6 @@ export const withEmpresa = <P extends object>(Component: React.ComponentType<P>)
 
 export const withAdmin = <P extends object>(Component: React.ComponentType<P>) =>
   withAuth(Component, { requiredRole: "admin" });
+
+
+

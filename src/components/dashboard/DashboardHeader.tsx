@@ -65,3 +65,6 @@ export function DashboardHeader({ userName, tipoUsuario, cooperativa, rolCoopera
     </motion.div>
   );
 }
+
+
+

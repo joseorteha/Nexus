@@ -27,3 +27,6 @@ export type {
   OnboardingCooperativa as OnboardingCooperativaData,
   OnboardingEmpresa as OnboardingEmpresaData
 } from '@/types/nexus';
+
+
+

@@ -245,3 +245,6 @@ const fileName = `profile/${Date.now()}-${avatarFile.name}`;
     </main>
   );
 }
+
+
+

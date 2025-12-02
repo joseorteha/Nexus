@@ -196,3 +196,6 @@ export const CooperativaStats: React.FC<CooperativaStatsProps> = ({
     </div>
   );
 };
+
+
+

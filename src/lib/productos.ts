@@ -447,3 +447,6 @@ export function calcularPorcentajeStock(stockActual: number, stockMinimo: number
   if (stockMinimo === 0) return 100;
   return Math.min(100, (stockActual / stockMinimo) * 100);
 }
+
+
+

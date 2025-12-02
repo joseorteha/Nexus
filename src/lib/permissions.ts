@@ -103,3 +103,6 @@ export function getDefaultRoute(userType: TipoUsuario): string {
       return "/dashboard";
   }
 }
+
+
+

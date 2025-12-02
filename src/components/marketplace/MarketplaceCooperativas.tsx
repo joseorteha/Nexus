@@ -327,3 +327,6 @@ function EmpresaCard({ empresa }: { empresa: Empresa }) {
     </div>
   );
 }
+
+
+

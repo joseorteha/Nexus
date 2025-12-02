@@ -224,7 +224,7 @@ export default function SolicitudesCooperativasPage() {
         {/* Filtros */}
         <div className="flex gap-2 mb-6">
           <Button
-            variant={filtroEstado === "pendiente" ? "default" : "outline"}
+            variant="default"
             onClick={() => setFiltroEstado("pendiente")}
             className="flex items-center gap-2"
           >
@@ -232,25 +232,25 @@ export default function SolicitudesCooperativasPage() {
             Pendientes
           </Button>
           <Button
-            variant={filtroEstado === "en_revision" ? "default" : "outline"}
+            variant="default"
             onClick={() => setFiltroEstado("en_revision")}
           >
             En Revisión
           </Button>
           <Button
-            variant={filtroEstado === "aprobada" ? "default" : "outline"}
+            variant="default"
             onClick={() => setFiltroEstado("aprobada")}
           >
             Aprobadas
           </Button>
           <Button
-            variant={filtroEstado === "rechazada" ? "default" : "outline"}
+            variant="default"
             onClick={() => setFiltroEstado("rechazada")}
           >
             Rechazadas
           </Button>
           <Button
-            variant={filtroEstado === "todas" ? "default" : "outline"}
+            variant="default"
             onClick={() => setFiltroEstado("todas")}
           >
             Todas
@@ -327,7 +327,7 @@ export default function SolicitudesCooperativasPage() {
                         <Button
                           size="sm"
                           onClick={() => rechazarSolicitud(solicitud)}
-                          variant="outline"
+                          variant="default"
                           className="text-red-600 border-red-600 hover:bg-red-50"
                         >
                           <XCircle className="w-4 h-4 mr-1" />
@@ -349,7 +349,7 @@ export default function SolicitudesCooperativasPage() {
                         <Button
                           size="sm"
                           onClick={() => rechazarSolicitud(solicitud)}
-                          variant="outline"
+                          variant="default"
                           className="text-red-600 border-red-600 hover:bg-red-50"
                         >
                           <XCircle className="w-4 h-4 mr-1" />
@@ -360,7 +360,7 @@ export default function SolicitudesCooperativasPage() {
 
                     <Button
                       size="sm"
-                      variant="outline"
+                      variant="default"
                       onClick={() => setSolicitudSeleccionada(solicitud)}
                     >
                       <Eye className="w-4 h-4 mr-1" />
@@ -423,7 +423,7 @@ export default function SolicitudesCooperativasPage() {
               </div>
 
               <div className="mt-6 flex gap-2 justify-end">
-                <Button variant="outline" onClick={() => setSolicitudSeleccionada(null)}>
+                <Button variant="default" onClick={() => setSolicitudSeleccionada(null)}>
                   Cerrar
                 </Button>
               </div>
@@ -434,3 +434,6 @@ export default function SolicitudesCooperativasPage() {
     </ProtectedRoute>
   );
 }
+
+
+

@@ -51,3 +51,6 @@ export async function getOnboardingData(userId: string, tipo: "normal" | "empres
     return null;
   }
 }
+
+
+

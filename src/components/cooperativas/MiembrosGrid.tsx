@@ -63,9 +63,9 @@ export const MiembrosGrid: React.FC<MiembrosGridProps> = ({
           color: 'bg-orange-500/10 text-orange-700 border-orange-300',
           icon: Clock
         };
-      case 'inactive':
+      default:
         return {
-          label: 'Inactivo',
+          label: 'Desconocido',
           color: 'bg-gray-500/10 text-gray-700 border-gray-300',
           icon: Users
         };
@@ -110,10 +110,10 @@ export const MiembrosGrid: React.FC<MiembrosGridProps> = ({
 
               {/* Badges */}
               <div className="flex items-center gap-2 shrink-0">
-                <Badge variant="outline" className={roleConfig.color}>
+                <Badge variant="default" className={roleConfig.color}>
                   {roleConfig.label}
                 </Badge>
-                <Badge variant="outline" className={statusConfig.color}>
+                <Badge variant="default" className={statusConfig.color}>
                   {statusConfig.label}
                 </Badge>
               </div>
@@ -144,7 +144,7 @@ export const MiembrosGrid: React.FC<MiembrosGridProps> = ({
               <div className="flex-1 min-w-0">
                 <h3 className="font-semibold truncate">{miembro.userName}</h3>
                 <div className="flex items-center gap-1.5 mt-1">
-                  <Badge variant="outline" className={`${roleConfig.color} text-xs`}>
+                  <Badge variant="default" className={`${roleConfig.color} text-xs`}>
                     <RoleIcon className="h-3 w-3 mr-1" />
                     {roleConfig.label}
                   </Badge>
@@ -167,7 +167,7 @@ export const MiembrosGrid: React.FC<MiembrosGridProps> = ({
               </div>
 
               <div className="pt-2 border-t">
-                <Badge variant="outline" className={statusConfig.color}>
+                <Badge variant="default" className={statusConfig.color}>
                   <StatusIcon className="h-3 w-3 mr-1" />
                   {statusConfig.label}
                 </Badge>
@@ -199,3 +199,6 @@ export const MiembrosGrid: React.FC<MiembrosGridProps> = ({
     </div>
   );
 };
+
+
+

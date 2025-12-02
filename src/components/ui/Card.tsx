@@ -45,3 +45,6 @@ export function CardContent({ children, className }: { children: ReactNode; clas
 export function CardFooter({ children, className }: { children: ReactNode; className?: string }) {
   return <div className={cn("mt-4 pt-4 border-t border-gray-200", className)}>{children}</div>;
 }
+
+
+

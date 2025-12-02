@@ -39,12 +39,12 @@ import {
   SidebarMenuSubItem,
   SidebarHeader,
   SidebarFooter,
-} from "@/components/ui/sidebar";
+} from "@/components/ui/Sidebar";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from "@/components/ui/Collapsible";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -52,7 +52,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/DropdownMenu";
 import { supabase } from "@/app/lib/supabase/client";
 
 export function AppSidebar() {
@@ -544,4 +544,7 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
+
+
+
 

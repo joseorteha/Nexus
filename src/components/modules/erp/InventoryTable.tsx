@@ -135,3 +135,6 @@ export function InventoryTable({ items, onEdit, onDelete }: InventoryTableProps)
     </div>
   );
 }
+
+
+

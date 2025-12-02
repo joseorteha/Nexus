@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { supabase } from "@/app/lib/supabase/client";
 import { MessageCircle, Send, Users, MapPin, ArrowLeft, Loader2, Sparkles } from "lucide-react";
@@ -22,7 +22,7 @@ interface Mensaje {
   created_at: string;
 }
 
-export default function ChatCooperativaPage() {
+function ChatCooperativaContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const cooperativaId = searchParams.get("cooperativa");
@@ -318,5 +318,17 @@ export default function ChatCooperativaPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ChatCooperativaPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center h-96">
+        <Loader2 className="w-12 h-12 text-primary animate-spin" />
+      </div>
+    }>
+      <ChatCooperativaContent />
+    </Suspense>
   );
 }

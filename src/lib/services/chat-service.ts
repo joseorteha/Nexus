@@ -161,3 +161,6 @@ export function subscribeToMessages(
   // Retornar función para cancelar suscripción
   return () => clearInterval(interval);
 }
+
+
+

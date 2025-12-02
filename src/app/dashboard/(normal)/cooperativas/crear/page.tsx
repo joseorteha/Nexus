@@ -263,7 +263,7 @@ export default function CrearCooperativaPage() {
           <div className="flex gap-4 pt-4">
             <Button
               type="button"
-              variant="outline"
+              variant="default"
               onClick={() => router.back()}
               className="flex-1"
             >
@@ -296,3 +296,6 @@ export default function CrearCooperativaPage() {
     </div>
   );
 }
+
+
+

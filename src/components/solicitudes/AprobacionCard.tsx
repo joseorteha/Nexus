@@ -182,8 +182,8 @@ export const AprobacionCard: React.FC<AprobacionCardProps> = ({
                   <div>
                     <span className="text-sm text-muted-foreground mb-2 block">Productos:</span>
                     <div className="flex flex-wrap gap-2">
-                      {cooperativeData.products?.map((product, index) => (
-                        <Badge key={index} variant="secondary">
+                      {(cooperativeData as any).products?.map((product: string, index: number) => (
+                        <Badge key={index} variant="info">
                           {product}
                         </Badge>
                       ))}
@@ -192,7 +192,7 @@ export const AprobacionCard: React.FC<AprobacionCardProps> = ({
                   <div>
                     <span className="text-sm text-muted-foreground mb-2 block">Categorías:</span>
                     <div className="flex flex-wrap gap-2">
-                      {cooperativeData.categories?.map((cat, index) => (
+                      {cooperativeData.category?.map((cat: string, index: number) => (
                         <Badge key={index} className="bg-purple-100 text-purple-700">
                           {cat}
                         </Badge>
@@ -219,7 +219,7 @@ export const AprobacionCard: React.FC<AprobacionCardProps> = ({
                     <MapPin className="h-4 w-4" />
                     Región
                   </h4>
-                  <Badge variant="outline" className="bg-orange-50 text-orange-700">
+                  <Badge variant="default" className="bg-orange-50 text-orange-700">
                     {cooperativeData.region}
                   </Badge>
                 </Card>
@@ -234,7 +234,7 @@ export const AprobacionCard: React.FC<AprobacionCardProps> = ({
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {cooperativeData.certifications.map((cert, index) => (
-                      <Badge key={index} variant="outline" className="bg-green-50 text-green-700 border-green-300">
+                      <Badge key={index} variant="default" className="bg-green-50 text-green-700 border-green-300">
                         <CheckCircle className="h-3 w-3 mr-1" />
                         {cert}
                       </Badge>
@@ -244,14 +244,14 @@ export const AprobacionCard: React.FC<AprobacionCardProps> = ({
               )}
 
               {/* Miembros fundadores */}
-              {cooperativeData.foundingMembers && cooperativeData.foundingMembers.length > 0 && (
+              {(cooperativeData as any).foundingMembers && (cooperativeData as any).foundingMembers.length > 0 && (
                 <Card className="p-4 border-2 border-purple-200">
                   <h4 className="font-semibold mb-3 flex items-center gap-2">
                     <Users className="h-4 w-4" />
-                    Miembros Fundadores ({cooperativeData.foundingMembers.length})
+                    Miembros Fundadores ({(cooperativeData as any).foundingMembers.length})
                   </h4>
                   <div className="space-y-2">
-                    {cooperativeData.foundingMembers.map((member, index) => (
+                    {(cooperativeData as any).foundingMembers.map((member: string, index: number) => (
                       <div key={index} className="flex items-center gap-2 text-sm">
                         <div className="h-8 w-8 rounded-full bg-gradient-to-br from-purple-300 to-pink-300 flex items-center justify-center text-white text-xs font-bold">
                           {member.charAt(0).toUpperCase()}
@@ -381,7 +381,7 @@ export const AprobacionCard: React.FC<AprobacionCardProps> = ({
 
                   <div className="flex gap-3">
                     <Button
-                      variant="outline"
+                      variant="default"
                       onClick={handleCancel}
                       disabled={isProcessing}
                       className="flex-1"
@@ -416,3 +416,6 @@ export const AprobacionCard: React.FC<AprobacionCardProps> = ({
     </div>
   );
 };
+
+
+

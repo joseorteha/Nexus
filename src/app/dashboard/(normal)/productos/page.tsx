@@ -240,7 +240,7 @@ export default function MisProductosPage() {
 
                 <div className="flex gap-2">
                   <Button
-                    variant="outline"
+                    variant="default"
                     size="sm"
                     onClick={() => router.push(`/dashboard/productos/${producto.id}`)}
                     className="flex-1 flex items-center justify-center gap-2"
@@ -249,7 +249,7 @@ export default function MisProductosPage() {
                     Editar
                   </Button>
                   <Button
-                    variant="outline"
+                    variant="default"
                     size="sm"
                     onClick={() => handleEliminar(producto.id)}
                     className="text-red-600 hover:text-red-700 hover:border-red-600"
@@ -274,3 +274,6 @@ export default function MisProductosPage() {
     </div>
   );
 }
+
+
+

@@ -65,7 +65,7 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-2">
               <h3 className="font-semibold text-lg truncate">{cooperativa.name}</h3>
-              <Badge variant="outline" className={statusConfig.color}>
+              <Badge variant="default" className={statusConfig.color}>
                 {statusConfig.label}
               </Badge>
             </div>
@@ -116,7 +116,7 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
               <span className="text-sm">Fundada en {formatDate(cooperativa.foundedDate)}</span>
             </div>
           </div>
-          <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+          <Badge variant="info" className="bg-white/20 text-white border-white/30">
             {statusConfig.label}
           </Badge>
         </div>
@@ -166,7 +166,7 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
           </h4>
           <div className="flex flex-wrap gap-2">
             {cooperativa.category.map((cat, index) => (
-              <Badge key={index} variant="secondary" className="bg-purple-100 text-purple-700">
+              <Badge key={index} variant="info" className="bg-purple-100 text-purple-700">
                 {cat}
               </Badge>
             ))}
@@ -174,17 +174,17 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
         </div>
 
         {/* Certificaciones */}
-        {cooperativa.certifications.length > 0 && (
+        {cooperativa.certifications && cooperativa.certifications.length > 0 && (
           <div>
             <h4 className="text-sm font-semibold text-muted-foreground mb-2 flex items-center gap-2">
               <Award className="h-4 w-4" />
               Certificaciones
             </h4>
             <div className="flex flex-wrap gap-2">
-              {cooperativa.certifications.map((cert, index) => (
+              {cooperativa.certifications?.map((cert, index) => (
                 <Badge 
                   key={index} 
-                  variant="outline" 
+                  variant="default" 
                   className="bg-green-50 text-green-700 border-green-300"
                 >
                   <CheckCircle className="h-3 w-3 mr-1" />
@@ -204,7 +204,7 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
             <MapPin className="h-4 w-4" />
             Ubicación
           </h4>
-          <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-300">
+          <Badge variant="default" className="bg-blue-50 text-blue-700 border-blue-300">
             {cooperativa.region}
           </Badge>
         </div>
@@ -213,7 +213,7 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
         {showActions && cooperativa.status === 'active' && (
           <div className="flex gap-3 pt-4 border-t">
             <Button 
-              variant="outline" 
+              variant="default" 
               className="flex-1"
               onClick={() => onVerDetalles?.(cooperativa.id)}
             >
@@ -244,3 +244,6 @@ export const CooperativaCard: React.FC<CooperativaCardProps> = ({
     </Card>
   );
 };
+
+
+

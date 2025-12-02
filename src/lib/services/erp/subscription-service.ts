@@ -136,3 +136,6 @@ export function getUpgradeMessage(feature: string, currentPlan: PlanType): strin
   
   return messages[feature] || `Esta función requiere actualizar tu plan ${currentPlan}`;
 }
+
+
+

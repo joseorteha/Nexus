@@ -443,3 +443,6 @@ export const PLAN_PRICES: Record<PlanType, { monthly: number; yearly: number }> 
   Premium: { monthly: 299, yearly: 2990 },
   Plus: { monthly: 599, yearly: 5990 },
 };
+
+
+

@@ -95,3 +95,6 @@ export function TrialBanner({ subscription }: TrialBannerProps) {
     </Card>
   );
 }
+
+
+
