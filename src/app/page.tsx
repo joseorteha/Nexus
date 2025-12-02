@@ -7,6 +7,7 @@ import SolutionSection from "../components/modules/landing/Solution";
 import whoWeAre from "../components/modules/landing/WhoIsFor";
 import Beneficios from "../components/modules/landing/BenefitsSection";
 import CTA from "../components/modules/landing/CTASection";
+import ChatSoporte from "../components/modules/landing/ChatSoporte";
 
 export default function HomePage() {
   return (
@@ -20,6 +21,7 @@ export default function HomePage() {
       <Beneficios />
       <CTA />
       <Footer />
+      <ChatSoporte />
     </main>
   );
 }
