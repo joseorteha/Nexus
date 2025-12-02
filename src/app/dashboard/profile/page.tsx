@@ -8,6 +8,7 @@ import { TipoUsuario } from "@/lib/permissions";
 export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [tipoUsuario, setTipoUsuario] = useState<TipoUsuario>("normal");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [profileData, setProfileData] = useState<any>(null);
 
   useEffect(() => {
@@ -83,7 +84,7 @@ export default function ProfilePage() {
             {tipoUsuario === "empresa" ? (
               <Building2 className="w-12 h-12" />
             ) : (
-              <User className="w-12 h-12" />
+              <img src={profileData.avatar_url} className="w-full h-full rounded-md" />
             )}
           </div>
           <div className="flex-1">
