@@ -1,13 +1,15 @@
 "use client";
 
+import { ShoppingCart, BarChart3, Truck, MapPin, Link, Sparkles } from "lucide-react";
+
 export default function SolutionSection() {
     const solutions = [
-        { title: "Marketplace inteligente", icon: "🛒" },
-        { title: "Mini ERP automatizado", icon: "📊" },
-        { title: "Logística integrada", icon: "🚚" },
-        { title: "Geolocalización avanzada", icon: "📍" },
-        { title: "Red social empresarial", icon: "🔗" },
-        { title: "Alertas y predicción", icon: "🔮" }
+        { title: "Marketplace inteligente", Icon: ShoppingCart },
+        { title: "Mini ERP automatizado", Icon: BarChart3 },
+        { title: "Logística integrada", Icon: Truck },
+        { title: "Geolocalización avanzada", Icon: MapPin },
+        { title: "Red social empresarial", Icon: Link },
+        { title: "Alertas y predicción", Icon: Sparkles }
     ];
 
     return (
@@ -39,9 +41,9 @@ export default function SolutionSection() {
                         >
                             {/* ICONO */}
                             <div
-                                className="text-5xl mb-4 transition-transform duration-300 group-hover:scale-110"
+                                className="mb-4 transition-transform duration-300 group-hover:scale-110 text-blue-600"
                             >
-                                {item.icon}
+                                <item.Icon className="w-12 h-12 mx-auto" />
                             </div>
 
                             <h3 className="text-xl font-semibold text-primary-dark">

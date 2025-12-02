@@ -1,27 +1,25 @@
 "use client";
 
+import { ShoppingCart, Handshake, BarChart3, MapPin, Users, Bell } from "lucide-react";
 import { ReactNode } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 
-// Import Swiper styles (importarlos aquí o en globals.css)
-import "swiper/css";
-import "swiper/css/pagination";
 
 const FeatureIcon = ({ children }: { children: ReactNode }) => (
-  <div className="text-4xl bg-blue-100 text-blue-600 p-3 rounded-2xl mb-4 inline-block shadow-md">
+  <div className="bg-blue-100 text-blue-600 p-4 rounded-2xl mb-4 inline-block shadow-md">
     {children}
   </div>
 );
 
-// Iconos placeholders
+// Iconos de lucide-react
 const Icons = {
-  Marketplace: () => <FeatureIcon>🛒</FeatureIcon>,
-  Match: () => <FeatureIcon>🤝</FeatureIcon>,
-  ERP: () => <FeatureIcon>📊</FeatureIcon>,
-  Geo: () => <FeatureIcon>📍</FeatureIcon>,
-  Social: () => <FeatureIcon>👥</FeatureIcon>,
-  Alerts: () => <FeatureIcon>🔔</FeatureIcon>,
+  Marketplace: () => <FeatureIcon><ShoppingCart className="w-10 h-10" /></FeatureIcon>,
+  Match: () => <FeatureIcon><Handshake className="w-10 h-10" /></FeatureIcon>,
+  ERP: () => <FeatureIcon><BarChart3 className="w-10 h-10" /></FeatureIcon>,
+  Geo: () => <FeatureIcon><MapPin className="w-10 h-10" /></FeatureIcon>,
+  Social: () => <FeatureIcon><Users className="w-10 h-10" /></FeatureIcon>,
+  Alerts: () => <FeatureIcon><Bell className="w-10 h-10" /></FeatureIcon>,
 };
 
 export default function SolutionSection() {
